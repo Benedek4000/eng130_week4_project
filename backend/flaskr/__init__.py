@@ -7,6 +7,14 @@ def create_app():
     from .blueprint import views
     app.register_blueprint(views, url_prefix="/")
 
-    from .streaming import show
+    from .streaming import gen_frames
+
+    @app.route("/index")
+    def index():
+        return render_template("index.html")
+    
+    @app.route("/video")
+    def video_feed():
+        return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
     return app
