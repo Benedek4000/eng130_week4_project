@@ -52,6 +52,56 @@ Set up in a virtual machine which will host the database.
 
 -
 
+# DB
+### What is MongoDB?
+
+- It is a NoSQL database called (Document database)
+
+- It stores data in flexible JSON - like document
+
+- It is higly scalable and flexible database.
+
+### How MongoDB looks when compared to RDBMS
+
+- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format. 
+
+###  The Structure of MongoDB database:
+
+- MongoDB physical daatbase contain several logical databases.
+
+- Each database contain several collections. Collection is something like table in relational database.
+
+- Each collection contains several documents. Document is something like record or row in RDBMS.
+
+### Key Characteristics of MongoDB database:
+
+- Installation and setup is very easy
+
+- All information related to a document is stored in a single place.
+
+- 
+
+
+-
+
 # Entity Relationship Diagram (ERD):
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
+
+In our app, In the first iteration we have 4 different Tables
+
+1. user - To store the user login details.
+2. user_details - To store the user personal details.
+3. session_details - To store the sessions logs of the user.
+4. call_log - To store the call, made by the users.
+
+The relations between the tables can be classified as follows:
+
+1. user & user_details will have `1 to 1 & only 1` relation.
+2. user & session_details will have `1 to many` relation.
+3. sessions_details and call_log will have `1 to many` relation.
+
+The following `ER Diagram` shows the above relation between the tables.
+
+
+
