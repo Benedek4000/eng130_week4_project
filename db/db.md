@@ -11,3 +11,35 @@
 
 We will use PostgreSQL for the relational database as it offers a lot of features like SQL querying, API support, migration to bigger databases and is supported on many operating systems
 `https://db-engines.com/en/system/PostgreSQL`
+
+# DB
+### What is MongoDB?
+
+- It is a NoSQL database called (Document database)
+
+- It stores data in flexible JSON - like document
+
+- It is higly scalable and flexible database.
+
+### How MongoDB looks when compared to RDBMS
+
+- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format. 
+
+###  The Structure of MongoDB database:
+
+- MongoDB physical daatbase contain several logical databases.
+
+- Each database contain several collections. Collection is something like table in relational database.
+
+- Each collection contains several documents. Document is something like record or row in RDBMS.
+
+### Key Characteristics of MongoDB database:
+
+- Installation and setup is very easy
+
+- All information related to a document is stored in a single place.
+
+- 
+
+
+-
