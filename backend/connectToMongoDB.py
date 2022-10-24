@@ -35,4 +35,11 @@ class DBConnector:
         else:
             print('Connection does not exist.')
 
-    
+    # get documents from database. returns zero, one or more documents
+    def getDocuments(self, key='_id', value=None):
+        try:
+            documents = self.db.posts.find({key: value})
+            return documents
+        except pymongo.Error as e:
+            print(f"Error: {e}")
+            return e
