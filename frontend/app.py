@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -8,7 +8,7 @@ def index():
 
 @app.route('/subhaanpractice')
 def welcome():
-    return 'Hello this is subhaans practice page'
+    return 'welcome to subhaans practice page'
 
 if __name__ == '__main__':
     app.run(debug=True)
