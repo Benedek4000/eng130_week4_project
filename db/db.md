@@ -101,9 +101,11 @@ The relations between the tables can be classified as follows:
 2. user & session_details will have `1 to many` relation.
 3. sessions_details and call_log will have `1 mandatory to many optional` relation.
 
-The following `ER Diagram` shows the above relation between the tables.
 
-<p>
-    <img src="db\images\erd_v1.jpg">
+- The following `ER Diagram` shows the above relation between the tables.
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
 </p>
+
 
