@@ -125,3 +125,26 @@ Set up in a virtual machine which will host the database.
 # Entity Relationship Diagram (ERD)
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
+
+In our app, In the *first iteration* we have 4 different Tables
+
+1. user - To store the user login details.
+2. user_details - To store the user personal details.
+3. session_details - To store the sessions logs of the user.
+4. call_log - To store the call, made by the users.
+
+The relations between the tables can be classified as follows:
+
+1. user & user_details will have `1 to 1 mandatory` relation.
+2. user & session_details will have `1 to many` relation.
+3. sessions_details and call_log will have `1 mandatory to many optional` relation.
+
+
+- The following `ER Diagram` shows the above relation between the tables.
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
+</p>
+
+
+Picture for ERD
