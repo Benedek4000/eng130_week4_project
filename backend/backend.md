@@ -26,8 +26,16 @@ from connectToMongoDB import DBConnector as mongodb
 from bson.objectid import ObjectId
 
 with mongodb(host='localhost', db_name='recordings', port=1234) as db:
-    documents = getDocuments(key='_id', value=ObjectId(post_id))
-    # or documents = getDocuments(value=ObjectId(post_id)), as default value for key: key='_id'
+    documents = getDocuments(key='_id', value=target_value)
+```
+
+example code to insert one or more documents:
+```python
+from connectToMongoDB import DBConnector as mongodb
+from bson.objectid import ObjectId
+
+with mongodb(host='localhost', db_name='recordings', port=1234) as db:
+    inserted_ids = insertDocuments(documents)
 ```
 
 ## Front end

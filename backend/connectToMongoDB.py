@@ -1,5 +1,6 @@
 import pymongo
 import sys
+from bson.objectid import ObjectId
 
 
 # class used to connect to a mongodb database
@@ -38,8 +39,19 @@ class DBConnector:
     # get documents from database. returns zero, one or more documents
     def getDocuments(self, key='_id', value=None):
         try:
-            documents = self.db.posts.find({key: value})
+            if key == '_id':
+                documents = self.db.posts.find({key: ObjectId(value)})
+            else:
+                documents = self.db.posts.find({key: value})
             return documents
+        except pymongo.Error as e:
+            print(f"Error: {e}")
+            return e
+
+    # insert one or more documents to database. returns inserted IDs
+    def insertDocuments(self, *documents):
+        try:
+            return self.db.posts.insert_many(documents).inserted_ids
         except pymongo.Error as e:
             print(f"Error: {e}")
             return e
