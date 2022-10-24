@@ -13,7 +13,7 @@ example code to execute a query:
 from connectToPostgreSQL import DBConnector as postgresql
 
 with postgresql(host='localhost', db_name='users', user='postgres', password='Abcd1234', port=1234) as db:
-    df = db.executeQuery('QUERY HERE')
+    df = db.execute_query('QUERY HERE')
 ```
 
 #### Connecting to MongoDB
@@ -26,7 +26,7 @@ from connectToMongoDB import DBConnector as mongodb
 from bson.objectid import ObjectId
 
 with mongodb(host='localhost', db_name='recordings', port=1234) as db:
-    documents = getDocuments(key='_id', value=target_value)
+    documents = get_documents(key='_id', value=target_value)
 ```
 
 example code to insert one or more documents:
@@ -35,7 +35,7 @@ from connectToMongoDB import DBConnector as mongodb
 from bson.objectid import ObjectId
 
 with mongodb(host='localhost', db_name='recordings', port=1234) as db:
-    inserted_ids = insertDocuments(documents)
+    inserted_ids = insert_documents(document1, document2, document3, ...)
 ```
 
 ## Front end

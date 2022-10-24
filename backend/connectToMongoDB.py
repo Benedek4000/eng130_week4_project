@@ -37,7 +37,7 @@ class DBConnector:
             print('Connection does not exist.')
 
     # get documents from database. returns zero, one or more documents
-    def getDocuments(self, key='_id', value=None):
+    def get_documents(self, key='_id', value=None):
         try:
             if key == '_id':
                 documents = self.db.posts.find({key: ObjectId(value)})
@@ -49,7 +49,7 @@ class DBConnector:
             return e
 
     # insert one or more documents to database. returns inserted IDs
-    def insertDocuments(self, *documents):
+    def insert_documents(self, documents):  # pass document(s) as a dictionary or as a  list of dictionaries
         try:
             return self.db.posts.insert_many(documents).inserted_ids
         except pymongo.Error as e:

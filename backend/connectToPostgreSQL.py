@@ -42,7 +42,7 @@ class DBConnector:
             print('Connection does not exist.')
 
     # execute query on database. returns a pandas dataframe
-    def executeQuery(self, query):
+    def execute_query(self, query):
         try:
             self.cursor.execute(query)
             df = pd.DataFrame(self.cursor)
