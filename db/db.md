@@ -88,7 +88,7 @@ Set up in a virtual machine which will host the database.
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
 
-In our app, In the first iteration we have 4 different Tables
+In our app, In the *first iteration* we have 4 different Tables
 
 1. user - To store the user login details.
 2. user_details - To store the user personal details.
@@ -97,9 +97,9 @@ In our app, In the first iteration we have 4 different Tables
 
 The relations between the tables can be classified as follows:
 
-1. user & user_details will have `1 to 1 & only 1` relation.
+1. user & user_details will have `1 to 1 mandatory` relation.
 2. user & session_details will have `1 to many` relation.
-3. sessions_details and call_log will have `1 to many` relation.
+3. sessions_details and call_log will have `1 mandatory to many optional` relation.
 
 The following `ER Diagram` shows the above relation between the tables.
 
