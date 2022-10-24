@@ -103,5 +103,7 @@ The relations between the tables can be classified as follows:
 
 The following `ER Diagram` shows the above relation between the tables.
 
-
+<p>
+    <img src="db\images\erd_v1.jpg">
+</p>
 
