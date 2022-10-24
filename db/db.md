@@ -21,6 +21,7 @@ We could have also chosen MySQL to create our relational database for the users 
 Set up in a virtual machine which will host the database.
 
 # DB
+
 ### What is MongoDB?
 
 - It is a NoSQL database called (Document database)
@@ -31,9 +32,9 @@ Set up in a virtual machine which will host the database.
 
 ### How MongoDB looks when compared to RDBMS
 
-- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format. 
+- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
 
-###  The Structure of MongoDB database:
+### The Structure of MongoDB database
 
 - MongoDB physical daatbase contain several logical databases.
 
@@ -41,18 +42,18 @@ Set up in a virtual machine which will host the database.
 
 - Each collection contains several documents. Document is something like record or row in RDBMS.
 
-### Key Characteristics of MongoDB database:
+### Key Characteristics of MongoDB database
 
 - Installation and setup is very easy
 
 - All information related to a document is stored in a single place.
 
-- 
-
+-
 
 -
 
 # DB
+
 ### What is MongoDB?
 
 - It is a NoSQL database called (Document database)
@@ -63,9 +64,9 @@ Set up in a virtual machine which will host the database.
 
 ### How MongoDB looks when compared to RDBMS
 
-- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format. 
+- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
 
-###  The Structure of MongoDB database:
+### The Structure of MongoDB database
 
 - MongoDB physical daatbase contain several logical databases.
 
@@ -73,17 +74,38 @@ Set up in a virtual machine which will host the database.
 
 - Each collection contains several documents. Document is something like record or row in RDBMS.
 
-### Key Characteristics of MongoDB database:
+### Key Characteristics of MongoDB database
 
 - Installation and setup is very easy
 
 - All information related to a document is stored in a single place.
 
-- 
-
+-
 
 -
 
-# Entity Relationship Diagram (ERD):
+# Entity Relationship Diagram (ERD)
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
+
+## How to setup VM with ssh and sftp
+
+- install SSH
+  - `sudo apt update`
+  - `sudo apt upgrade`
+  - `sudo apt install openssh-server`
+  - `sudo service ssh status`
+  - if not running start service with
+    - `sudo service ssh start`
+  - make sure it is running (`sudo service ssh status`)
+  - enable firewall for specified port from status command
+    - `sudo ufw allow ssh`
+    - `sudo ufw enable`
+    - `sudo ufw status`
+      - you should see port 22 there
+    - get your local IP address
+      - `ifconfig` (install if you dont have it)
+  - install PuTTY and connect to db
+  - `sudo adduser sftp_user` any name works, this is just placeholder
+  - for ease of use you can set password to be the same as username
+  - no further details needed apart from password
