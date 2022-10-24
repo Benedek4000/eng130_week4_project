@@ -2,7 +2,7 @@
 
 Here i will discuss some fundamental UX/UI principles that an application should follow. After explaining the principle I will then go onto explaining how our application follows these principles.
 
-![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fuxdesign.cc%2Fwhy-ux-and-ui-should-remain-separate-7d6e3addb46f&psig=AOvVaw1j8WxAK11Jbss54FY5dlXg&ust=1666708014118000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJjSgKuJ-foCFQAAAAAdAAAAABAE)
+![alt text](https://miro.medium.com/max/1400/1*hp-yfKsmzsj711iLbM8eEw.jpeg)
 
 ## Design should focus on an experience 
 
