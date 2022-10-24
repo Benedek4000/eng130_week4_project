@@ -43,3 +43,7 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
 
 -
+
+# Entity Relationship Diagram (ERD):
+
+Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
