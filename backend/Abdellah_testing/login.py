@@ -1,4 +1,5 @@
 # Messing around with some code. Getting use to how to route to urls and so on 
+# rendering templates 
 
 from flask import Flask, render_template, url_for
 # url_for allows a pages to be switched when a button is clicked  
