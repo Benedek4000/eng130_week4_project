@@ -2,9 +2,12 @@
 
 Here i will discuss some fundamental UX/UI principles that an application should follow. After explaining the principle I will then go onto explaining how our application follows these principles.
 
+![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fuxdesign.cc%2Fwhy-ux-and-ui-should-remain-separate-7d6e3addb46f&psig=AOvVaw1j8WxAK11Jbss54FY5dlXg&ust=1666708014118000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJjSgKuJ-foCFQAAAAAdAAAAABAE)
+
 ## Design should focus on an experience 
 
-As a user you when using an application you don't really remember the information that the organisation provides but they do tend to remember the experience they have. So you need to make the user have a pleasant experience. 
+As a user yo
+u when using an application you don't really remember the information that the organisation provides but they do tend to remember the experience they have. So you need to make the user have a pleasant experience. 
 
 The way our application provides this is by having an easy to use interface and just essentially providing the service it was made for. Which is to record videos. The user will be able to easily log in record a video and access that video using a special link that is sent to them. We don't bombard the user with loads of information. Just simple instructions on how to use the application. Leaving a better emotional effect on the user.
 
