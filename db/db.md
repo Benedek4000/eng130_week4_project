@@ -109,3 +109,4 @@ The relations between the tables can be classified as follows:
 </p>
 
 
+Picture for ERD
