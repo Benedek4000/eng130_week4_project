@@ -18,6 +18,9 @@ with DBConnector(host="localhost", db_name="suppliers", user="postgres", passwor
 
 Use `connectToMongoDB.py` to connect to MongoDB database.
 
+## Front end
+
+### Login page
 
 Features I'll need to include in the log in page 
 - email input
