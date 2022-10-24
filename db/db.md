@@ -58,4 +58,8 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
  - When you read from GridFS , the driver reassembles all the chunks as needed. This means that you can read sections of a file as per your query range.
 
+<<<<<<< HEAD
  - 
+=======
+Picture for ERD
+>>>>>>> 1092e9db8b8229d012ae787733eb37bf2fd453ad
