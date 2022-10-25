@@ -80,11 +80,6 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
 - All information related to a document is stored in a single place.
 
--MongoDB has a restriction of each document size to be 16 MB. But you can store large files like audio/video files using GridFS.
-
-- Files are "chunked" into multiple objects that are less than 255 KiB each. This has the added advantage of letting us efficiently retrieve a specific range of the given file.
-
-
 ### GridFS:
 
 - GridFS basically takes afile and breaks it up into multiple chiunks which are stored as individual documents in two collectobs:
@@ -103,16 +98,6 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
  ![image](https://user-images.githubusercontent.com/97250268/197802102-719221c1-005b-4dc1-bce2-ba0cce61830d.png)
 
 
-
-### Key Characteristics of MongoDB database
-
-- Installation and setup is very easy
-
-- All information related to a document is stored in a single place.
-
--
-
--
 # Normalisation
 
 Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
