@@ -16,6 +16,10 @@ def login():
         return 'welcome to practice page'
     else:
         return render_template('login.html')
+    
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    return render_template('signup.html')
 
 @app.route('/videoplayer')
 def player():
