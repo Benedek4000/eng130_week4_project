@@ -112,6 +112,28 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 -
 
 -
+# Normalisation
+
+Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
+
+- A normalisation typically divides the larger table into smaller table and links them using relationships.
+- The normal form is used to reduce redundancy from the database table.
+
+We need a database to be atleast normalised to Third Normal Form `3NF` to achieve this.
+
+## First Normal Form
+- The data must be atomic.
+- There should be no repeated groups.
+- Each row must be unique.
+
+## Second Normal Form
+- Already in First Normal Form `1NF`.
+- All non-key attributes must functionally depend upon the full primary key.
+
+## Third Normal Form
+- Already in the Second Normal Form `2NF`.
+- There are no transitive dependencies.
+
 
 # Entity Relationship Diagram (ERD)
 
