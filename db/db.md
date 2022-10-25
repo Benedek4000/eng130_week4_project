@@ -118,7 +118,7 @@ sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org
 
 - Step 1: To access the mongodb shell - use `mongo` command.
 
-- Step 2: To check for existing databases - use `show dbs1` command.
+- Step 2: To check for existing databases - use `show dbs` command.
     
 - Step 3: To create the database - use `use [database_name]` command. For e.g. `use teams_app`
   
@@ -128,11 +128,34 @@ sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org
 
 - Give the command `mongofiles -d [Name of the database] put "path of the videofile"`
 - mongofiles -d teams_app put "path of the videofile"
-- 
 
--
+ 
+```
+- Work under progress
+```
+## Normalisation
 
-# Entity Relationship Diagram (ERD)
+Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
+
+- A normalisation typically divides the larger table into smaller table and links them using relationships.
+- The normal form is used to reduce redundancy from the database table.
+
+We need a database to be atleast normalised to Third Normal Form `3NF` to achieve this.
+
+### First Normal Form
+- The data must be atomic.
+- There should be no repeated groups.
+- Each row must be unique.
+
+### Second Normal Form
+- Already in First Normal Form `1NF`.
+- All non-key attributes must functionally depend upon the full primary key.
+
+### Third Normal Form
+- Already in the Second Normal Form `2NF`.
+- There are no transitive dependencies.
+
+## Entity Relationship Diagram (ERD)
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
 
