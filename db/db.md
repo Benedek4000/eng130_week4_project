@@ -57,7 +57,16 @@ Set up in a virtual machine which will host the database.
     - `AllowTcpForwarding no`
     - `X11Forwarding no`
   - we will need to now restart the ssh service to read this additional data
-    - `sudo /etc/init.d/ssh restart`
+    - `sudo systemctl enable ssh`
+    - `sudo systemctl restart ssh`
+    - we should now be able to connect to our vm using ssh
+    - to connect to vm with filezilla
+      - use sftp server
+      - host: 127.0.0.1
+      - user: sftp_user
+      - password: sftp_user
+      - port: 22
+
 # DB
 
 ### What is MongoDB?
@@ -139,12 +148,10 @@ The relations between the tables can be classified as follows:
 2. user & session_details will have `1 to many` relation.
 3. sessions_details and call_log will have `1 mandatory to many optional` relation.
 
-
 - The following `ER Diagram` shows the above relation between the tables.
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
 </p>
-
 
 Picture for ERD
