@@ -109,9 +109,36 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
 - All information related to a document is stored in a single place.
 
--
+### Steps to Install MongoDB Community Edition  
+- Go the terminal we have to give the below command:
+`wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -`
+- This operation should respond with OK
+- Create a list file for MongoDB using the below command
+ `echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list`
+- Command to reload the local package database
+ `sudo apt-get update`
+- Install the specific version  of MongoDB
+`sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18`
+- You can start the mongod process by issuing the following command
+`sudo systemctl start mongod`
+### Steps to create database in mongoDB:
 
--
+- Step 1: Access the mongodb shell by giving the command
+  	`mongo`
+- Step 2: Look for existing databases by giving the below command
+    `show dbs`
+- Step 3: To create the database use the command `use [database_name]`
+  `use teams_app`
+- Step 4: To create a collection with name call log
+   `db.createCollection(“video_storage”)`
+### How to store Huge Media Files in Mongo Database:
+
+- Give the command `mongofiles -d [Name of the database] put "path of the videofile"`
+- mongofiles -d teams_app put "path of the videofile"
+- 
+
+
+
 
 # Entity Relationship Diagram (ERD)
 
