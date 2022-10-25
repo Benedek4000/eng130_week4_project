@@ -16,6 +16,8 @@ function validateLoginForm() {
         alert("Please enter your email and password");
         return false;
     }
+
+    
 }
 
    

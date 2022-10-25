@@ -6,21 +6,29 @@ app = Flask(__name__)
 def index():
     return "Welcome to the home page!"
 
+@app.route('/home')
+def home():
+    return "This is the HOMEPAGE"
+
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     return render_template('login.html')
+
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    return render_template('signup.html')
 
 @app.route('/nav')
 def welcome():
     return render_template('index.html')
 
-@app.route('/home')
-def home():
-    return "This is the home page"
 
 @app.route('/videorec')
 def videorec():
     return "This is the video recording page"
+
 
 @app.route('/storage')
 def storage():
