@@ -1,2 +1,4 @@
 backend/flaskr/__pycache__/
 .idea/
+virtualisation
+.gitignore
