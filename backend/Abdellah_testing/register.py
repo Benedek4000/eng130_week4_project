@@ -25,8 +25,6 @@ def register():
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             flash('Invalid email address!')
             
-        elif not re.match(r'[A-Za-z0-9]+', firstname, lastname):
-            flash('Username must contain only characters and numbers!')
             
         elif not password or not email:
             flash('Please fill out the form!')
