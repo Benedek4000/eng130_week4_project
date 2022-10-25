@@ -99,9 +99,10 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
  - When you read from GridFS , the driver reassembles all the chunks as needed. This means that you can read sections of a file as per your query range.
 
-- Each database contain several collections. Collection is something like table in relational database.
 
-- Each collection contains several documents. Document is something like record or row in RDBMS.
+ ![image](https://user-images.githubusercontent.com/97250268/197802102-719221c1-005b-4dc1-bce2-ba0cce61830d.png)
+
+
 
 ### Key Characteristics of MongoDB database
 
