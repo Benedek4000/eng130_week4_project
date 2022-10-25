@@ -8,10 +8,7 @@ def index():
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method == 'POST':
-        return 'welcome to practice page'
-    else:
-        return render_template('login.html')
+    return render_template('login.html')
 
 @app.route('/subhaanpractice')
 def welcome():
