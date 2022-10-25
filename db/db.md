@@ -1,4 +1,4 @@
-# Database
+# DB / #
 
 - We will use SQL to query for data
   - Flat file database for recordings
@@ -7,18 +7,10 @@
 - We will use (most likely) MongoDB for both databases
   - We have used it and linked it before so will be relatively easy to do
 
-## Relational database choice
+## Relational database / ##
 
 We will use PostgreSQL for the relational database as it offers a lot of features like SQL querying, API support, migration to bigger databases and is supported on many operating systems
-
 `https://db-engines.com/en/system/PostgreSQL`
-![comparison](images/mysql_vs_postgresql.png)
-
-We could have also chosen MySQL to create our relational database for the users but we decided on PostgreSQL as it is becoming more popular due to its API support.
-
-### Setting up PostgreSQL
-
-Set up in a virtual machine which will host the database.
 
 ## How to setup VM with ssh and sftp
 
@@ -67,71 +59,112 @@ Set up in a virtual machine which will host the database.
       - password: sftp_user
       - port: 22
 
-# DB
+
+
+## NoSQL Database
+
+- We are using `MongoDB` as the `NoSQL` database to store the video files.
 
 ### What is MongoDB?
 
 - It is a NoSQL database called (Document database)
 
-- It stores data in flexible JSON - like document
+- It stores data in flexible "JSON-like" document.
 
-- It is higly scalable and flexible database.
+- It is higly scalable and flexible database, perfect for our scenario.
 
-### How MongoDB looks when compared to RDBMS
-
-- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
-
-### The Structure of MongoDB database
-
-- MongoDB physical daatbase contain several logical databases.
-
-- Each database contain several collections. Collection is something like table in relational database.
-
-- Each collection contains several documents. Document is something like record or row in RDBMS.
-
-### Key Characteristics of MongoDB database
+### Why MongoDB?
 
 - Installation and setup is very easy
 
 - All information related to a document is stored in a single place.
 
--
+### Structure & Comparision with `RDBMS`
 
--
+- MongoDB physical database contains several logical databases.
 
-# DB
+- Each database contain several `collections`. Collection is similar to table in relational database.
 
-### What is MongoDB?
-
-- It is a NoSQL database called (Document database)
-
-- It stores data in flexible JSON - like document
-
-- It is higly scalable and flexible database.
-
-### How MongoDB looks when compared to RDBMS
+- Each `collection` contains several `documents`. Document is similar to record or row in RDBMS.
 
 - In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
 
-### The Structure of MongoDB database
+### Problems
 
-- MongoDB physical daatbase contain several logical databases.
+The maximum BSON document size is 16 megabytes.
 
-- Each database contain several collections. Collection is something like table in relational database.
+The maximum document size helps ensure that a single document cannot use excessive amount of RAM or, during transmission, excessive amount of bandwidth.
 
-- Each collection contains several documents. Document is something like record or row in RDBMS.
+### Solution - `GridFS API`
 
-### Key Characteristics of MongoDB database
+To store documents larger than the maximum size of 16 megabytes, MongoDB provides the GridFS API
 
-- Installation and setup is very easy
+- GridFS basically takes a file and breaks it up into multiple chunks which are stored as individual documents in two collections:
 
-- All information related to a document is stored in a single place.
+ 1. `chunk collection` - stores the document part. Each chunk is limited to 255 KB in size. 
 
--
+ 2. `file collection` - stores the consequent additional metadata. When reading from GridFS, the driver re-assembles all the chunks as needed. It makes it easier to read a section of a file as per our query range.
 
--
+<p align="center">
+ <img height=400 width=800 src="https://user-images.githubusercontent.com/97250268/197802102-719221c1-005b-4dc1-bce2-ba0cce61830d.png">
+</p>
 
-# Entity Relationship Diagram (ERD)
+### Installing MongoDB Community Edition
+
+- In the terminal - use the command: `wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -`
+- Create a list file for MongoDB:
+```
+ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+```
+- Command to reload the local package database `sudo apt-get update`
+- Install the specific version  of MongoDB
+```
+sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18
+```
+- To start the mongoDB `sudo systemctl start mongod`
+
+### Creating Database in mongoDB:
+
+- Step 1: To access the mongodb shell - use `mongo` command.
+
+- Step 2: To check for existing databases - use `show dbs` command.
+    
+- Step 3: To create the database - use `use [database_name]` command. For e.g. `use teams_app`
+  
+- Step 4: To create a `collection` called `video_storage` - `db.createCollection(“video_storage”)`
+
+### How to store Huge Media Files in Mongo Database:
+
+- Give the command `mongofiles -d [Name of the database] put "path of the videofile"`
+- mongofiles -d teams_app put "path of the videofile"
+
+ 
+```
+- Work under progress
+```
+## Normalisation
+
+Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
+
+- A normalisation typically divides the larger table into smaller table and links them using relationships.
+- The normal form is used to reduce redundancy from the database table.
+
+We need a database to be atleast normalised to Third Normal Form `3NF` to achieve this.
+
+### First Normal Form
+- The data must be atomic.
+- There should be no repeated groups.
+- Each row must be unique.
+
+### Second Normal Form
+- Already in First Normal Form `1NF`.
+- All non-key attributes must functionally depend upon the full primary key.
+
+### Third Normal Form
+- Already in the Second Normal Form `2NF`.
+- There are no transitive dependencies.
+
+## Entity Relationship Diagram (ERD)
 
 Also known as Entity Relationship model, ERD is a graphical representation that shows the relationships between different entity or tables in the database. It shows what kind of relation they have like `1 to 1` or `1 to many`.
 
@@ -154,4 +187,5 @@ The relations between the tables can be classified as follows:
     <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
 </p>
 
-Picture for ERD
+
+
