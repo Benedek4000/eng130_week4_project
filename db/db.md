@@ -59,8 +59,6 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
       - password: sftp_user
       - port: 22
 
-
-
 ## NoSQL Database
 
 - We are using `MongoDB` as the `NoSQL` database to store the video files.
@@ -101,7 +99,7 @@ To store documents larger than the maximum size of 16 megabytes, MongoDB provide
 
 - GridFS basically takes a file and breaks it up into multiple chunks which are stored as individual documents in two collections:
 
- 1. `chunk collection` - stores the document part. Each chunk is limited to 255 KB in size. 
+ 1. `chunk collection` - stores the document part. Each chunk is limited to 255 KB in size.
 
  2. `file collection` - stores the consequent additional metadata. When reading from GridFS, the driver re-assembles all the chunks as needed. It makes it easier to read a section of a file as per our query range.
 
@@ -113,35 +111,39 @@ To store documents larger than the maximum size of 16 megabytes, MongoDB provide
 
 - In the terminal - use the command: `wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -`
 - Create a list file for MongoDB:
+
 ```
  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
 ```
+
 - Command to reload the local package database `sudo apt-get update`
 - Install the specific version  of MongoDB
+
 ```
 sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18
 ```
+
 - To start the mongoDB `sudo systemctl start mongod`
 
-### Creating Database in mongoDB:
+### Creating Database in mongoDB
 
 - Step 1: To access the mongodb shell - use `mongo` command.
 
 - Step 2: To check for existing databases - use `show dbs` command.
-    
+
 - Step 3: To create the database - use `use [database_name]` command. For e.g. `use teams_app`
   
 - Step 4: To create a `collection` called `video_storage` - `db.createCollection(“video_storage”)`
 
-### How to store Huge Media Files in Mongo Database:
+### How to store Huge Media Files in Mongo Database
 
 - Give the command `mongofiles -d [Name of the database] put "path of the videofile"`
 - mongofiles -d teams_app put "path of the videofile"
 
- 
 ```
 - Work under progress
 ```
+
 ## Normalisation
 
 Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
@@ -152,15 +154,18 @@ Normalization is the process of organizing the data in the database. It is used 
 We need a database to be atleast normalised to Third Normal Form `3NF` to achieve this.
 
 ### First Normal Form
+
 - The data must be atomic.
 - There should be no repeated groups.
 - Each row must be unique.
 
 ### Second Normal Form
+
 - Already in First Normal Form `1NF`.
 - All non-key attributes must functionally depend upon the full primary key.
 
 ### Third Normal Form
+
 - Already in the Second Normal Form `2NF`.
 - There are no transitive dependencies.
 
@@ -186,6 +191,3 @@ The relations between the tables can be classified as follows:
 <p align="center">
     <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
 </p>
-
-
-
