@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,16 +12,14 @@ def home():
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        return 'welcome to practice page'
+    else:
+        return render_template('login.html')
 
-
-@app.route('/signup', methods=['GET','POST'])
-def signup():
-    return render_template('signup.html')
-
-@app.route('/nav')
-def welcome():
-    return render_template('index.html')
+@app.route('/videoplayer')
+def player():
+    return render_template('subindex.html')
 
 
 @app.route('/videorec')
