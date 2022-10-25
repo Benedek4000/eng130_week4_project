@@ -50,39 +50,49 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
     - `X11Forwarding no`
   - we will need to now restart the ssh service to read this additional data
     - `sudo /etc/init.d/ssh restart`
-# DB
 
-# DB
+
+## NoSQL Database
+
+- We are using `MongoDB` as the `NoSQL` database to store the video files.
 
 ### What is MongoDB?
 
 - It is a NoSQL database called (Document database)
 
-- It stores data in flexible JSON - like document
+- It stores data in flexible "JSON-like" document.
 
-- It is higly scalable and flexible database.
+- It is higly scalable and flexible database, perfect for our scenario.
 
-### How MongoDB looks when compared to RDBMS
-
-- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
-
-### The Structure of MongoDB database
-
-- MongoDB physical database contain several logical databases.
-
-- Each database contain several collections. Collection is something like table in relational database.
-
-- Each collection contains several documents. Document is something like record or row in RDBMS.
-
-### Key Characteristics of MongoDB database
+### Why MongoDB?
 
 - Installation and setup is very easy
 
 - All information related to a document is stored in a single place.
 
-### GridFS:
+### Structure & Comparision with `RDBMS`
 
-- GridFS basically takes afile and breaks it up into multiple chiunks which are stored as individual documents in two collectobs:
+- MongoDB physical database contains several logical databases.
+
+- Each database contain several `collections`. Collection is similar to table in relational database.
+
+- Each `collection` contains several `documents`. Document is similar to record or row in RDBMS.
+
+- In RDBMS the data is stored in tables, whereas in MONGODB the data is stored in JSON format.
+
+
+
+### Problems
+
+The maximum BSON document size is 16 megabytes.
+
+The maximum document size helps ensure that a single document cannot use excessive amount of RAM or, during transmission, excessive amount of bandwidth.
+
+### Solution - `GridFS API`
+
+To store documents larger than the maximum size of 16 megabytes, MongoDB provides the GridFS API
+
+- GridFS basically takes a file and breaks it up into multiple chunks which are stored as individual documents in two collections:
 
  - the chunk collection (stores the document parts), and
 
