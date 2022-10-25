@@ -80,11 +80,6 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
 - All information related to a document is stored in a single place.
 
--MongoDB has a restriction of each document size to be 16 MB. But you can store large files like audio/video files using GridFS.
-
-- Files are "chunked" into multiple objects that are less than 255 KiB each. This has the added advantage of letting us efficiently retrieve a specific range of the given file.
-
-
 ### GridFS:
 
 - GridFS basically takes afile and breaks it up into multiple chiunks which are stored as individual documents in two collectobs:
@@ -99,15 +94,27 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 
  - When you read from GridFS , the driver reassembles all the chunks as needed. This means that you can read sections of a file as per your query range.
 
-- Each database contain several collections. Collection is something like table in relational database.
 
-- Each collection contains several documents. Document is something like record or row in RDBMS.
+ ![image](https://user-images.githubusercontent.com/97250268/197802102-719221c1-005b-4dc1-bce2-ba0cce61830d.png)
 
-### Key Characteristics of MongoDB database
 
-- Installation and setup is very easy
+# Normalisation
 
-- All information related to a document is stored in a single place.
+Normalization is the process of organizing the data in the database. It is used to minimize the redundancy from the database, so that we can eliminate undesirable characteristics like Insertion, Update and Deletion anomalies.
+
+- A normalisation typically divides the larger table into smaller table and links them using relationships.
+- The normal form is used to reduce redundancy from the database table.
+
+We need a database to be atleast normalised to Third Normal Form `3NF` to achieve this.
+
+## First Normal Form
+- The data must be atomic.
+- There should be no repeated groups.
+- Each row must be unique.
+
+## Second Normal Form
+- Already in First Normal Form `1NF`.
+- All non-key attributes must functionally depend upon the full primary key.
 
 ### Steps to Install MongoDB Community Edition  
 - Go the terminal we have to give the below command:
@@ -137,8 +144,7 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
 - mongofiles -d teams_app put "path of the videofile"
 - 
 
-
-
+-
 
 # Entity Relationship Diagram (ERD)
 
