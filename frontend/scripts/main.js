@@ -1,26 +1,11 @@
-// Create function to validate a login form
+// Create function to validate a login form, for email and password
 
 function validateLoginForm() {
     // Get the email and password from the form
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
-    // Check if the email and password are empty
+    console.log(email);
+    console.log(password);
 
-    if (email == "" || password == "") {
-        alert("Please enter your email and password");
-        return false;
-    }
-    // Check if the email is valid
-
-    if (!validateEmail(email)) {
-        alert("Please enter a valid email");
-        return false;
-    }
-
-}
-
-function validateEmail(email) {
-    var re = /\S+@\S+\.\S+/;
-    return re.test(email);
 }

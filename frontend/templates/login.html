@@ -4,8 +4,11 @@
     <h1>LOGIN</h1>
 {% endblock %}
 
+
+
 {% block body %}
-    <form action="/login" method="post">
+    
+    <form action="/login" method="POST" name="loginForm">
         <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
@@ -15,6 +18,9 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
 
-        <button type="submit" class="btn btn-primary" onclick="validateLoginForm()">Submit</button>
+        <p>Forgot your password? <a href="/reset">Reset it here</a></p>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+
+        <button type="submit" class="btn btn-primary" onclick="validateLoginForms()">Submit</button>
     </form>
 {% endblock %}
