@@ -1,4 +1,6 @@
 backend/flaskr/__pycache__/
 .idea/
 virtualisation
-.gitignore
+backend/database_test.py
+VMs/
+backend/__pycache__

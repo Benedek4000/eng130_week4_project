@@ -11,9 +11,14 @@ Use `connectToPostgreSQL.py` to connect to PostgreSQL database.
 example code to execute a query:
 ```python
 from connectToPostgreSQL import DBConnector as postgresql
+import pandas as pd
+from database_properties import postgresql_properties
 
-with postgresql(host='localhost', db_name='users', user='postgres', password='Abcd1234', port=1234) as db:
-    df = db.execute_query('QUERY HERE')
+with postgresql(host='127.0.0.1', db_name='users', user='postgres', password='spartaglobal', port='22') as db:
+    db.execute_query("CREATE TABLE users(user_id SERIAL PRIMARY KEY, name VARCHAR(60));")
+    db.execute_query("INSERT INTO users(name) VALUES ('Angel'), ('Ben'), ('Jorge'), ('Shahrukh'), ('Luke');")
+    df = db.execute_query('SELECT * FROM users;')
+print(df)
 ```
 
 #### Connecting to MongoDB

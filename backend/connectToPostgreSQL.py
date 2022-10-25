@@ -34,6 +34,7 @@ class DBConnector:
     def close_db(self):
         if self.conn is not None:
             try:
+                self.execute_query("COMMIT;")
                 self.conn.close()
                 print('Database connection closed.')
             except psycopg2.Error as e:
@@ -47,6 +48,8 @@ class DBConnector:
             self.cursor.execute(query)
             df = pd.DataFrame(self.cursor)
             return df
+        except psycopg2.ProgrammingError:
+            pass
         except psycopg2.Error as e:
             print(f"Error: {e}")
             return e
