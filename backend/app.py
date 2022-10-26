@@ -26,7 +26,7 @@ def home():
 def login():
     
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-   
+    
     # Check if "email" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form['email']
@@ -37,7 +37,7 @@ def login():
         #cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-            df = db.execute_query('SELECT email, password FROM users WHERE email = %s', (email,))
+            df = db.execute_query('SELECT email, password FROM users WHERE email = %s', (email))
 
         # Fetch one record and return result
         account = len(df.index)
@@ -69,8 +69,8 @@ def login():
 
 #------- Register
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     # It is an object that is used to make the connection for executing SQL queries
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
@@ -90,7 +90,7 @@ def register():
         #Check if account exists using MySQL
         #cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-            df = db.execute_query('SELECT email FROM users WHERE email = %s', (email,))
+            df = db.execute_query('SELECT email FROM users WHERE email = %s', (email))
 
         account = len(df.index)
         print(account)
@@ -121,7 +121,7 @@ def register():
         flash('Please fill out the form!')
         
     # Show registration form with message (if any)
-    return render_template('register.html')
+    return render_template('signup.html')
 
 
 def hash_pw(password, salt="5gz"):

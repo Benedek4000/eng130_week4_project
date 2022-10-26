@@ -26,7 +26,7 @@ def home():
 def login():
     
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-   
+
     # Check if "email" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form['email']
