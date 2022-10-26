@@ -32,9 +32,31 @@ function validateSignUpForm() {
         alert("Please enter all fields");
         return false;
     }
-    validateEmail();
-    validatePassword();
+    if (validatePassword() == True && validateEmail() == True) {
+        
+    }
+
 }
+
+// Create fuction that vaildates the sign up form and then sends the data to the backend in a JSON format
+// Get form data from the form
+// Use a event listener to listen for the submit event
+// Disable the default action of the submit event
+// Use fetch to post the data to the backend
+
+function newSignUpForm(){
+    const signUpForm = document.getElementById("signUpForm");
+    signUpForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(signUpForm);
+        const data = Object.fromEntries(formData);
+        const jsonData = JSON.stringify(data);
+        console.log(jsonData);
+    
+    })
+}
+
+
 
 
 function validatePassword() {
@@ -60,6 +82,9 @@ function validatePassword() {
         alert("Password must contain at least one special character");
         return false;
     }
+    else {
+        return true;
+    }
 }
 
 function validateEmail() {
@@ -71,6 +96,9 @@ function validateEmail() {
     if (email.value.search(/.com/) < 0) {
         alert("Email must contain .com");
         return false;
+    }
+    else{
+        return true;
     }
 }
 
