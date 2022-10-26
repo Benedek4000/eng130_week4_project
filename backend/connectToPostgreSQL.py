@@ -1,3 +1,5 @@
+# by Benedek Kovacs
+
 import psycopg2
 import sys
 import pandas as pd

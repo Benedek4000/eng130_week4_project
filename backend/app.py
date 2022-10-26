@@ -2,7 +2,7 @@ from flask import Flask, request, session, redirect, url_for, render_template, f
 from connectToPostgreSQL import DBConnector as postgresql
 import pandas as pd
 from database_properties import postgresql_properties_local as psql_prop
-from curses import flash
+#from curses import flash
 import hashlib
 import re
 
@@ -40,9 +40,9 @@ def login():
             df = db.execute_query('SELECT email, password FROM users WHERE email = %s', (email,))
 
         # Fetch one record and return result
-        #account = len(df.index)
+        account = len(df.index)
  
-        if len(df.index) == 1:
+        if account == 1:
             #password_rs = account['password']
             #print(password_rs)
             
@@ -52,7 +52,7 @@ def login():
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
                 #session['id'] = account['id']
-                session['email'] = df['email']
+                session['email'] = account['email']
                 
                 # Redirect to home page
                 return redirect(url_for('home'))
@@ -92,11 +92,11 @@ def register():
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query('SELECT email FROM users WHERE email = %s', (email,))
 
-        #account = len(df.index)
-        #print(account)
+        account = len(df.index)
+        print(account)
         
         # If the account already exist show error and validation checks
-        if len(df.index) > 0:
+        if account > 0:
             flash('Account already exists!')
             
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
