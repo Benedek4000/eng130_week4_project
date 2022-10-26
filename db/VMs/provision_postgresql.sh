@@ -8,6 +8,4 @@ sudo apt install postgresql postgresql-contrib -y
 sudo rm /etc/postgresql/15/main/postgresql.conf /etc/postgresql/15/main/pg_hba.conf
 cp /home/vagrant/sync/postgresql.conf /etc/postgresql/15/main/postgresql.conf
 cp /home/vagrant/sync/pg_hba.conf /etc/postgresql/15/main/pg_hba.conf
-sudo service postgresql status
-sudo apt install apache2 -y
-sudo systemctl status apache2
+sudo systemctl restart postgresql
