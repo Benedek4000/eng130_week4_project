@@ -29,12 +29,12 @@ def reset():
 
 @app.route('/videoplayer')
 def player():
-    return render_template('subindex.html')
+    return render_template('vpindex.html')
 
 
 @app.route('/videorec')
 def videorec():
-    return "This is the video recording page"
+    return render_template('vrindex.html')
 
 
 @app.route('/storage')
