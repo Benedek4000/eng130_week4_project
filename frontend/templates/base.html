@@ -23,25 +23,25 @@
     
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('home') }}">KMWM-v1.0</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{{ url_for('home') }}">Home </a>
-            <a class="nav-item nav-link" href="{{ url_for('videorec') }}">Video Recording</a>
-            <a class="nav-item nav-link" href="{{ url_for('storage') }}">Storage</a>
-            <a class="nav-item nav-link" href="{{ url_for('login') }}">Log out</a>
-          </div>
+      <a class="navbar-brand" href="{{ url_for('home') }}">KMWM-v1.0</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="{{ url_for('home') }}">Home </a>
+          <a class="nav-item nav-link" href="{{ url_for('videorec') }}">Video Recording</a>
+          <a class="nav-item nav-link" href="{{ url_for('storage') }}">Storage</a>
+          <a class="nav-item nav-link" href="{{ url_for('login') }}">Log out</a>
         </div>
-      </nav>
+      </div>
+    </nav>
 
-      {% block body %} {% endblock %}
-      
-    <div class="bg-light fixed-bottom" style="position: relative;">
-      <footer class="bg-grey">
-        <div class="container py-3">
+    {% block body %} {% endblock %}
+        
+    <div class="bg-light ft">
+      <footer>
+        <div class="container py-0">
           <div class="row py-3">
     
             <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
@@ -49,7 +49,7 @@
               <p class="text-muted mb-4">020 8940 2333</p>
               
             </div>
-           
+          
             <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
               <h6 class="text-uppercase font-weight-bold mb-4">Email</h6>
               <p class="text-muted mb-4">contact@spartaglobal.com</p>
@@ -72,6 +72,7 @@
         
       </footer>
     </div>
+    
     
     
 
