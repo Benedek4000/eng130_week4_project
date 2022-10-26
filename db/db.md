@@ -59,6 +59,9 @@ We will use PostgreSQL for the relational database as it offers a lot of feature
       - password: sftp_user
       - port: 22
 
+
+## Hosting server on Linux with Vagrant
+
 ## NoSQL Database
 
 - We are using `MongoDB` as the `NoSQL` database to store the video files.
