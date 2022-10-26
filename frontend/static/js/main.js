@@ -78,11 +78,14 @@ function validateEmail() {
 function showPassword() {
     var pass = document.getElementById("password");
     var comPass = document.getElementById("confirmPassword");
+    var eye = document.getElementById("eye-icon");
     if (pass.type === "password") {
         pass.type = "text";
         comPass.type = "text";
+        eye.className = "fa-sharp fa-solid fa-eye-slash";
     } else {
         pass.type = "password";
         comPass.type = "password";
+        eye.className = "fa-sharp fa-solid fa-eye";
     }
   }
