@@ -226,3 +226,17 @@ The relations between the tables can be classified as follows:
 <p align="center">
     <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
 </p>
+
+In the *Second Iteration*, we decided to reduce the number of table to 2.
+
+- The `user` & `user_details` table have lot of fields, which are redundent for the initial app. We merge those 2 tables in one.
+
+- Instead of having multiple logs for the same session, we have decided to keep it simple by storing each session as whole.
+
+
+The updated `ER Diagram` is much clear and simplified.
+
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
+</p>
