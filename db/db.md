@@ -125,6 +125,41 @@ sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org
 
 - To start the mongoDB `sudo systemctl start mongod`
 
+### Creating a `Vagrantfile` to for the Virtual Machine where the database will run
+
+- The following script is for the vagrant file, which uses ip address `192.168.10.150`
+
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/bionic64"
+    config.vm.network "private_network", ip: "192.168.10.150"
+    config.vm.provision "shell",path: "provision.sh"
+end
+```
+- For Automation, the `provision.sh` file includes all the required commands to install and run `mongodb`. We use `wget` to retrieve contents from web server.
+
+```
+# To Update the system & then Upgrade it
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+# Install MongoDB
+
+# Retrieve the mongodb insallation files from the server using wget
+wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+
+# Create a list file for MongoDB
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+
+# Reload the local package database
+sudo apt-get update
+
+# Installing the specific version of MongoDB
+sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18
+
+# Starting the mongod process
+sudo systemctl start mongod
+```
 ### Creating Database in mongoDB
 
 - Step 1: To access the mongodb shell - use `mongo` command.
