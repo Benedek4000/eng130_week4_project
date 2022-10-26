@@ -18,6 +18,14 @@ def login():
 def signup():
     return render_template('signup.html')
 
+@app.route('/forgotPassword', methods=['GET','POST'])
+def forgotpassword():
+    return render_template('forgotpassword.html')
+
+@app.route('/reset', methods=['GET','POST'])
+def reset():
+    return render_template('passwordReset.html')
+
 
 @app.route('/videoplayer')
 def player():
