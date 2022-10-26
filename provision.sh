@@ -14,3 +14,11 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18
 # You can start the mongod process by issuing the following command
 sudo systemctl start mongod
+
+# Steps to install apache server in the virtual machine
+# Before we install Apache we should do package update
+sudo apt update
+# Now let's install Apache
+sudo apt install apache2 -y
+# We will connect to localhost and port 80
+curl -v localhost:80
