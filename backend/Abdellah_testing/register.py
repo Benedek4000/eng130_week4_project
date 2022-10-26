@@ -1,9 +1,13 @@
+# routes to register page 
+# The get() method returns the value of the item with the specified key.
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
+    # Check if "email" and "password" POST requests exist (user submitted form)
     
     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
+        
         # Create variables for easy access
         firstname = request.form['firstname']
         lastname = request.form['lastname']
