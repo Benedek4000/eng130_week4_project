@@ -29,17 +29,17 @@ def reset():
 
 @app.route('/videoplayer')
 def player():
-    return render_template('vpindex.html')
+    return render_template('video_player.html')
 
 
 @app.route('/videorec')
 def videorec():
-    return render_template('vrindex.html')
+    return render_template('video_rec.html')
 
 
 @app.route('/storage')
 def storage():
-    return "This is the Storage page"
+    return render_template('storage.html')
 
 
 if __name__ == '__main__':
