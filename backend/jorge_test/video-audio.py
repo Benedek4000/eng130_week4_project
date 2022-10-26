@@ -1,39 +1,45 @@
+import numpy as np 
+import cv2
+from datetime import datetime as d
 import pyaudio
 import wave
-import cv2
+
+cap = cv2.VideoCapture(0)
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+now = d.now().strftime("%d%m%y-%H%M%S")
+name = now+".mp4"
+out = cv2.VideoWriter(name, fourcc, 20.0, (640,480))
 
 chunk = 1024  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
 channels = 2
 fs = 44100  # Record at 44100 samples per second
+seconds = 3
 filename = "output.wav"
+p = pyaudio.PyAudio()
 
-p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
-stream = p.open(format=pyaudio.paInt16,
+stream = p.open(format=sample_format,
                 channels=channels,
                 rate=fs,
                 frames_per_buffer=chunk,
                 input=True)
 
-frames = []  # Initialize array to store frames
-
-# Store data in chunks for 3 seconds
+frames = []
 
 
-try:
-    while True:
-        data = stream.read(chunk)
-        frames.append(data)
-        
-except KeyboardInterrupt:
-    pass
-# for i in range(0, int(fs / chunk * seconds)):
-#     data = stream.read(chunk)t
-#     frames.append(data)
+while True:
+    r, frame = cap.read()
+    cv2.imshow("my face", frame)
+    out.write(frame)
+    data = stream.read(chunk)
+    frames.append(data)
+    if cv2.waitKey(1) == ord("q"):
+        break
+    
+cap.release()
+cv2.destroyAllWindows()
+out.release()
 
-# Stop and close the stream
-print(frames) 
 stream.stop_stream()
 stream.close()
 # Terminate the PortAudio interface
@@ -47,3 +53,5 @@ wf.setframerate(fs)
 wf.writeframes(b''.join(frames))
 wf.close()
 print("done")
+
+
