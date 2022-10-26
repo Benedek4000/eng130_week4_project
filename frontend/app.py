@@ -24,7 +24,7 @@ def player():
 
 @app.route('/videorec')
 def videorec():
-    return "This is the video recording page"
+    return render_template('vrindex.html')
 
 
 @app.route('/storage')
