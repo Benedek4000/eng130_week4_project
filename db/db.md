@@ -135,11 +135,13 @@ sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org
 ```
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/bionic64"
-    config.vm.network "private_network", ip: "192.168.10.150"
+    config.vm.network "private_network", ip: "192.168.10.150", type: "dhcp"
+    config.vm.network "forwarded_port", guest: 27017, host: 80 
+       auto_correct: true
     config.vm.provision "shell",path: "provision.sh"
 end
 ```
-- For Automation, the `provision.sh` file includes all the required commands to install and run `mongodb`. We use `wget` to retrieve contents from web server.
+- For Automation, the `provision.sh` file includes all the required commands to install and run `mongodb`. We use `wget` to retrieve contents from web server. We also install `apache server`
 
 ```
 # To Update the system & then Upgrade it
@@ -160,8 +162,15 @@ sudo apt-get update
 # Installing the specific version of MongoDB
 sudo apt-get install -y mongodb-org=4.2.18 mongodb-org-server=4.2.18 mongodb-org-shell=4.2.18 mongodb-org-mongos=4.2.18 mongodb-org-tools=4.2.18
 
-# Starting the mongod process
+# Starting the mongod process & enabling it
 sudo systemctl start mongod
+sudo systemctl enable --now mongod 
+
+# Installing the Apache Server
+sudo apt install apache2 -y
+
+# Connect to localhost and port 80
+curl -v localhost:80
 ```
 ### Creating Database in mongoDB
 
@@ -175,9 +184,19 @@ sudo systemctl start mongod
 
 ### How to store Huge Media Files in Mongo Database
 
-- Give the command `mongofiles -d [Name of the database] put "path of the videofile"`
-- mongofiles -d teams_app put "path of the videofile"
+- To store the files: Use the command `mongofiles -d [Name of the database] put "path of the videofile"` Example:
 
+- `mongofiles -d teams_app put "<path of the file>"`
+
+To retrieve the file:
+- `mongofiles -d teams_app get "<name of the file>"`
+  
+- Go inside the database: `use <name of the database>`
+  
+- we have 2 files: `fs.files` and `fs.chuncks`
+- To see the whole files `db.fs.files.find().pretty()`
+- To see the chuncks `db.fs.chuncks.find({},{data:0,_id:0}).pretty()`  
+  
 ```
 - Work under progress
 ```
