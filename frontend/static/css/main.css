@@ -16,9 +16,10 @@
   bottom: 0;
   width: 100%;
   text-align: center;
+  
 }
 
-
+/* creating a wrapper to keep windows size the same */
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
