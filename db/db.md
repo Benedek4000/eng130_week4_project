@@ -233,10 +233,8 @@ In the *Second Iteration*, we decided to reduce the number of table to 2.
 
 - Instead of having multiple logs for the same session, we have decided to keep it simple by storing each session as whole.
 
-
 The updated `ER Diagram` is much clear and simplified.
 
-
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/110366380/197568046-6b724064-5e66-49ce-9c69-0db6b3775585.jpg">
+    <img src="https://user-images.githubusercontent.com/110366380/198003869-7edf9b53-ca34-4293-a964-93c4740c418f.png">
 </p>
