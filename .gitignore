@@ -4,3 +4,6 @@ virtualisation
 backend/database_test.py
 VMs/
 backend/__pycache__
+/backend/jorge_test/app/in/
+/backend/jorge_test/app/out/
+/backend/jorge_test/app/shots/
