@@ -23,13 +23,13 @@ if (formSignUp) {
 		});
 
 		// Send the data to the server
-		fetch('/api/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: data,
-		});
+		// fetch('/api/signup', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	body: data,
+		// });
 	});
 } else {
 	console.log('The Form is not found');
@@ -46,7 +46,7 @@ function validateLoginForm() {
 		alert('Please enter your email and password');
 		return false;
 	}
-
+}
 
 
 function validateSignUpForm() {
