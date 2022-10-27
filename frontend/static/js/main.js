@@ -46,12 +46,6 @@ function validateLoginForm() {
 		alert('Please enter your email and password');
 		return false;
 	}
-
-	var f = {
-		email: email,
-		password: password,
-	};
-	console.log(f);
 }
 
 function validateSignUpForm() {
