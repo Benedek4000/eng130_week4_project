@@ -162,7 +162,7 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('video.html')
     
     
 @app.route('/video_feed')
