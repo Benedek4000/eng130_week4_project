@@ -1,44 +1,35 @@
-{% extends "base.html" %}
-
-{% block title%}{% endblock %}
-
-{% block head %}
+{% extends "base.html" %} {% block title%}{% endblock %} {% block head %}
 <style>
-    .containerbtn { 
-      height: 50px;
-      position: relative;
-      
-    }
-    
-    .centerbtn {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-    </style>
-{% endblock %}
+	.containerbtn {
+		height: 50px;
+		position: relative;
+	}
 
-{% block body %} 
-<div class="container" style="text-align: center;"> 
-    <h2>Start Recording </h2>
-    <p>Video length: </p>
-    <img src="../static/assets/VideoRecording.png" alt="Placeholder" style="width: 300px; height: 250px;">
-    <p style="text-align: left;"> Name: </p>
-    <p style="text-align: left;"> Location:</p>
-   </div>
+	.centerbtn {
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+</style>
 
+{% endblock %} {% block body %}
+<div class="container" style="text-align: center">
+	<h2>Start Recording</h2>
+	<p>Video length:</p>
+	<img src="../static/assets/VideoRecording.png" alt="Placeholder" style="width: 300px; height: 250px" />
+	<p style="text-align: left">Name:</p>
+	<p style="text-align: left">Location:</p>
+</div>
 
-    <div class="containerbtn">
-    <div class="centerbtn">
-      <button type="button" class="btn btn-primary"><i class="fa-solid fa-camera"></i></button>
-      <button type="button" class="btn btn-primary"><i class="fa-sharp fa-solid fa-microphone-slash"></i></button>
-      <button type="button" class="btn color" style="background-color: red; border-color: black;"> <i class="fa-solid fa-record-vinyl"></i></button>
-
-    </div>
-    </div>
-
+<div class="containerbtn">
+	<div class="centerbtn">
+		<button type="button" class="btn btn-primary"><i class="fa-solid fa-camera"></i></button>
+		<button type="button" class="btn btn-primary"><i class="fa-sharp fa-solid fa-microphone-slash"></i></button>
+		<button type="button" class="btn color" style="background-color: red; border-color: black"><i class="fa-solid fa-record-vinyl"></i></button>
+	</div>
+</div>
 
 {% endblock %}

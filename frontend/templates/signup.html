@@ -1,63 +1,53 @@
-{% extends "baseAuth.html" %}
-
-{% block form1 %}
+{% extends "baseAuth.html" %} {% block form1 %}
 <div>
-  <h1 class="text-center">Sign Up</h1>
+	<h1 class="text-center">Sign Up</h1>
 </div>
 
-<div class="container-fluid justify-content-center rounded" style="background-color:#98c1d9;">
-  <form action="/signup" method="POST" name="signupForm">
-      <div class="form-row">
-          <div class="col-md-4 mb-3">
-            <label for="firstName">First name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="First name" required>
-          </div>
+<div class="container-fluid justify-content-center rounded" style="background-color: #98c1d9">
+	<form method="POST" id="signUpForm">
+		<div class="form-row">
+			<div class="col-md-4 mb-3">
+				<label for="firstName">First name</label>
+				<input type="text" class="form-control" id="firstName" placeholder="First name" required />
+			</div>
 
-          <div class="col-md-4 mb-3">
-            <label for="lastName">Last name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
-          </div>
+			<div class="col-md-4 mb-3">
+				<label for="lastName">Last name</label>
+				<input type="text" class="form-control" id="lastName" placeholder="Last name" required />
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-md-6 mb-3">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="...@mail.com" required />
+			</div>
 
-      </div>
-      <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="...@mail.com" required>
-          </div>
+			<div class="col-md-4 mb-3">
+				<label for="phoneNum">Phone Number</label>
+				<input type="text" class="form-control" id="phoneNum" placeholder="xxx-xxx-xxxx" required />
+			</div>
+		</div>
 
-          <div class="col-md-4 mb-3">
-              <label for="phoneNum">Phone Number</label>
-              <input type="text" class="form-control" id="phoneNum" placeholder="xxx-xxx-xxxx" required>
-          </div>
+		<div class="form-row">
+			<div class="col-md-5 mb-3">
+				<label for="passowrd">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" required />
+			</div>
 
-      </div>
-        
-      <div class="form-row">
-          <div class="col-md-5 mb-3">
-            <label for="passowrd">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" required>
-          </div>
+			<div class="col-md-5 mb-3">
+				<label for="confirmPassword">Confirm Password</label>
+				<input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required />
+			</div>
 
-          <div class="col-md-5 mb-3">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
-          </div>
+			<div class="col-md-5 mb-3 align-bottom">
+				<button type="button" class="btn btn-primary" onclick="showPassword() "><i class="fa-sharp fa-solid fa-eye" id="eye-icon"></i></button>
+			</div>
+		</div>
 
-          <div class="col-md-5 mb-3 align-bottom">
-            <button type="button" class="btn btn-primary" onclick="showPassword() "><i class="fa-sharp fa-solid fa-eye" id="eye-icon"></i></button>
-          </div>
-
-      </div>
-      
-      <button class="btn btn-primary" type="submit" onclick="validateSignUpForm()">Submit form</button>
-
-  </form>
+		<button class="btn btn-primary" type="submit" id="submitbtn">Submit form</button>
+	</form>
 </div>
-{% endblock %}
 
-
-{% block formInfo %}
-<h3 class="text-center" style="color:#98c1d9">
-    Already Have an Account? <a href="/login" style="color:#ee6c4d">Login Here</a>
-</h3>
+{% endblock %} {% block formInfo %}
+<h3 class="text-center" style="color: #98c1d9">Already Have an Account? <a href="/login" style="color: #ee6c4d">Login Here</a></h3>
 {% endblock %}
