@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 backend/flaskr/__pycache__/
 .idea/
 virtualisation
@@ -5,3 +6,7 @@ backend/database_test.py
 VMs/
 backend/Abdellah_testing/__pycache__
 backend/__pycache__
+=======
+.vagrant/
+ubuntu-bionic-18.04-cloudimg-console.log
+>>>>>>> fa81a9872e526328f9150d7841d844818b2527e8
