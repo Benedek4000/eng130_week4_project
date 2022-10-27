@@ -51,7 +51,6 @@ def login():
                 
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                #session['id'] = account['id']
                 session['email'] = account['email']
                 
                 # Redirect to home page
@@ -126,3 +125,15 @@ def signup():
 
 def hash_pw(password, salt="5gz"):
     return hashlib.md5((password+salt).encode().hexdigest())
+
+
+@app.route('/logout')
+def logout():
+    # Remove session data, this will log the user out
+   session.pop('loggedin', None)
+   session.pop('email', None)
+   # Redirect to login page
+   return redirect(url_for('login'))
+
+if __name__ == "__main__":
+    app.run(debug=True)
