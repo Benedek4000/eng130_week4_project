@@ -16,12 +16,7 @@ function validateLoginForm() {
         return false;
     }
 
-    var f = {
-        "email": email,
-        "password": password,
-        };
-        console.log(f);
-}
+
 
 function validateSignUpForm() {
     // Get the email and password from the form
@@ -40,6 +35,8 @@ function validateSignUpForm() {
     }
     validateEmail();
     validatePassword();
+
+
 }
 
 
