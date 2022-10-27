@@ -25,6 +25,16 @@ try:
 except OSError as error:
     pass
 
+try:
+    os.mkdir('./in')
+except OSError as error:
+    pass
+
+try:
+    os.mkdir('./out')
+except OSError as error:
+    pass
+
 #Load pretrained face detection model    
 
 
