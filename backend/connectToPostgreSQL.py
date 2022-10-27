@@ -8,6 +8,11 @@ import pandas as pd
 # class used to connect to a postgresql database
 class DBConnector:
 
+    #used for print(db)
+    def __str__(self):
+        self.cursor.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
+        return 60*'-'+'\n'+'\n\n'.join(list(f'{table[0].upper()}\n'+self.execute_query(f'SELECT * FROM {table[0]};').to_string() for table in self.cursor.fetchall()))+'\n'+60*'-'
+
     # enable usage of 'with'
     def __enter__(self):
         return self
