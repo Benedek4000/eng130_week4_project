@@ -4,8 +4,6 @@ if (formSignUp) {
 	formSignUp.addEventListener('submit', (e) => {
 		e.preventDefault();
 
-		console.log('Hello');
-
 		// Get form data from the form
 		var firstName = document.getElementById('firstName').value;
 		var lastName = document.getElementById('lastName').value;
@@ -22,14 +20,16 @@ if (formSignUp) {
 			comPassword,
 		});
 
+		console.log(data);
+
 		// Send the data to the server
-		fetch('/api/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: data,
-		});
+		// fetch('/api/signup', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	body: data,
+		// });
 	});
 } else {
 	console.log('The Form is not found');
@@ -69,9 +69,8 @@ function validateSignUpForm() {
 		alert('Please enter all fields');
 		return false;
 	}
-	if (validatePassword() == True && validateEmail() == True) {
-		return true;
-	}
+	validatePassword();
+	validateEmail();
 }
 
 function validatePassword() {
