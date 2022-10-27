@@ -17,17 +17,15 @@ postgresql_properties_global={
 }
 
 mongodb_properties_local={
-    'user': 'vagrant',
-    'password': 'vagrant',
     'host': '127.0.0.1',
     'port': '22',
-    'db_name': 'recordings',
-    'collection': 'recordings'
+    'db_name': 'teams_app',
+    'collection': 'video_storage'
 }
 
 mongodb_properties_global={
     'host': '185.69.145.183',
     'port': '2200',
-    'db_name': 'recordings',
-    'collection': 'recordings'
+    'db_name': 'teams_app',
+    'collection': 'video_storage'
 }
