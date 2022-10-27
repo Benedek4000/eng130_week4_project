@@ -4,8 +4,6 @@ if (formSignUp) {
 	formSignUp.addEventListener('submit', (e) => {
 		e.preventDefault();
 
-		console.log('Hello');
-
 		// Get form data from the form
 		var firstName = document.getElementById('firstName').value;
 		var lastName = document.getElementById('lastName').value;
@@ -21,6 +19,8 @@ if (formSignUp) {
 			password,
 			comPassword,
 		});
+
+		console.log(data);
 
 		// Send the data to the server
 		// fetch('/api/signup', {
@@ -59,13 +59,13 @@ function validateSignUpForm() {
 
 	// Check if all feilds are empty
 
-    if (firstName == "" || lastName == "" || email == "" || password == "" || comPassword == "") {
-        // Return Error Message if email and password is empty
-        alert("Please enter all fields");
-        return false;
-    }
-    validateEmail();
-    validatePassword();
+	if (firstName == '' || lastName == '' || email == '' || password == '' || comPassword == '') {
+		// Return Error Message if email and password is empty
+		alert('Please enter all fields');
+		return false;
+	}
+	validatePassword();
+	validateEmail();
 }
 
 function validatePassword() {
