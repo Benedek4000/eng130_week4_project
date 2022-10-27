@@ -2,7 +2,7 @@ from flask import Flask, request, session, redirect, url_for, render_template, f
 from connectToPostgreSQL import DBConnector as postgresql
 import pandas as pd
 from database_properties import postgresql_properties_local as psql_prop
-from curses import flash
+#from curses import flash
 import hashlib
 import re
 
@@ -26,7 +26,7 @@ def home():
 def login():
     
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+    
     # Check if "email" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form['email']
@@ -37,12 +37,12 @@ def login():
         #cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-            df = db.execute_query('SELECT email, password FROM users WHERE email = %s', (email,))
+            df = db.execute_query('SELECT email, password FROM users WHERE email = %s', (email))
 
         # Fetch one record and return result
-        #account = len(df.index)
+        account = len(df.index)
  
-        if len(df.index) == 1:
+        if account == 1:
             #password_rs = account['password']
             #print(password_rs)
             
@@ -51,8 +51,7 @@ def login():
                 
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                #session['id'] = account['id']
-                session['email'] = df['email']
+                session['email'] = account['email']
                 
                 # Redirect to home page
                 return redirect(url_for('home'))
@@ -69,8 +68,8 @@ def login():
 
 #------- Register
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     # It is an object that is used to make the connection for executing SQL queries
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
@@ -90,13 +89,13 @@ def register():
         #Check if account exists using MySQL
         #cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-            df = db.execute_query('SELECT email FROM users WHERE email = %s', (email,))
+            df = db.execute_query('SELECT email FROM users WHERE email = %s', (email))
 
-        #account = len(df.index)
-        #print(account)
+        account = len(df.index)
+        print(account)
         
         # If the account already exist show error and validation checks
-        if len(df.index) > 0:
+        if account > 0:
             flash('Account already exists!')
             
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
@@ -121,8 +120,20 @@ def register():
         flash('Please fill out the form!')
         
     # Show registration form with message (if any)
-    return render_template('register.html')
+    return render_template('signup.html')
 
 
 def hash_pw(password, salt="5gz"):
     return hashlib.md5((password+salt).encode().hexdigest())
+
+
+@app.route('/logout')
+def logout():
+    # Remove session data, this will log the user out
+   session.pop('loggedin', None)
+   session.pop('email', None)
+   # Redirect to login page
+   return redirect(url_for('login'))
+
+if __name__ == "__main__":
+    app.run(debug=True)

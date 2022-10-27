@@ -15,10 +15,12 @@ import pandas as pd
 from database_properties import postgresql_properties
 
 with postgresql(host='127.0.0.1', db_name='users', user='postgres', password='spartaglobal', port='22') as db:
-    db.execute_query("CREATE TABLE users(user_id SERIAL PRIMARY KEY, name VARCHAR(60));")
-    db.execute_query("INSERT INTO users(name) VALUES ('Angel'), ('Ben'), ('Jorge'), ('Shahrukh'), ('Luke');")
+    db.execute_query("INSERT INTO Users(email, password, first_name, last_name, is_admin) VALUES ('bkovacs@spartaglobal.com', 'psswrd', 'Benedek', 'Kovacs', false);")
     df = db.execute_query('SELECT * FROM users;')
-print(df)
+    print(df)
+    db.execute_query("INSERT INTO Sessions(email, password, first_name, last_name, is_admin) VALUES ('bkovacs@spartaglobal.com', 'psswrd', 'Benedek', 'Kovacs', false);")
+    df = db.execute_query('SELECT * FROM users;')
+    print(df)
 ```
 
 #### Connecting to MongoDB

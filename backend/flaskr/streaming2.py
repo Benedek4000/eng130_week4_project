@@ -7,6 +7,7 @@ import wave
 
 
 def gen_frames():
+    global press
     cap = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     now = d.now().strftime("%d%m%y-%H%M%S")
@@ -30,22 +31,27 @@ def gen_frames():
 
     frames = []  # Initialize array to store frames
 
-    press = True
+    
+    try:
+        while press:
+            r, frame = cap.read()
+            if not r:
+                break
+            elif cv2.waitKey(1) == ord("q"):
+                press = False
+            else:
+                data = stream.read(chunk)
+                frames.append(data)
+                ret, buffer = cv2.imencode(".jpg", frame)
+                out.write(frame)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    except KeyboardInterrupt:
+        pass
+    
 
-    while press:
-        r, frame = cap.read()
-        if not r:
-            break
-        elif cv2.waitKey(1) == ord("q"):
-            press = False
-        else:
-            data = stream.read(chunk)
-            frames.append(data)
-            ret, buffer = cv2.imencode(".jpg", frame)
-            out.write(frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            
+
+
     out.release()
     stream.stop_stream()
     stream.close()
@@ -59,3 +65,4 @@ def gen_frames():
     wf.setframerate(fs)
     wf.writeframes(b''.join(frames))
     wf.close()
+    print("Test DONE DONE DONE DONE DONE DONE")

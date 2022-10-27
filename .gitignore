@@ -4,6 +4,7 @@ backend/flaskr/__pycache__/
 virtualisation
 backend/database_test.py
 VMs/
+backend/Abdellah_testing/__pycache__
 backend/__pycache__
 =======
 .vagrant/

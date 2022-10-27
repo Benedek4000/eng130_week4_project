@@ -1,3 +1,5 @@
+# by Benedek Kovacs
+
 import pymongo
 import sys
 from bson.objectid import ObjectId
