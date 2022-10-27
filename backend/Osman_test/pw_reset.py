@@ -10,7 +10,7 @@ def reset_with_token(token):
     try:
         email = ts.loads(token, salt="recover-key", max_age=86400)
     except:
-        abort(404)
+        abort(404) 
 
     # calls the form to input users password
 
