@@ -5,6 +5,7 @@ from database_properties import postgresql_properties_local as psql_prop
 #from curses import flash
 import hashlib
 import re
+from forms import EmailForm, PasswordForm
 
 app = Flask(__name__)
 app.secret_key = 'whatever' 
@@ -134,6 +135,64 @@ def logout():
    session.pop('email', None)
    # Redirect to login page
    return redirect(url_for('login'))
+
+
+@app.route('/reset', methods=["GET", "POST"])
+def reset():
+    form = EmailForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first_or_404()
+
+        subject = "Password reset requested"
+
+        
+        #token = ts.dumps(self.email, salt='recover-key')
+
+        recover_url = url_for(
+            'reset_with_token',
+            token=token,
+            _external=True)
+
+        html = render_template(
+            'email/recover.html',
+            recover_url=recover_url)
+
+        # send email function
+        # return user to main page
+
+        return redirect(url_for('index'))
+    return render_template('reset.html', form=form)
+
+@app.route('/reset/<token>', methods=["GET", "POST"])
+def reset_with_token(token):
+    try:
+        email = ts.loads(token, salt="recover-key", max_age=86400)
+    except:
+        abort(404)
+
+    # calls the form to input users password
+
+    form = PasswordForm()
+
+    # if the email matches the one that made the request then it takes the new password
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=email).first_or_404()
+
+        user.password = form.password.data
+
+        # adds the user to the database
+
+        #db.session.add(user)
+        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+            df = db.execute_query(f"INSERT INTO Users(email, password, first_name, last_name, phone_number) VALUES ('{user.email}', '{hash_pw(user.password)}', '{user.first_name}', '{user.last_name}', '{user.phone_number}';")
+
+        # takes user to sign in page to use the new password
+
+        return redirect(url_for('signin'))
+
+    return render_template('reset_with_token.html', form=form, token=token)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
