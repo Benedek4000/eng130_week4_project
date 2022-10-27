@@ -1,0 +1,28 @@
+/* create a bg class with the following properties: */
+
+.bg {
+  background: url(../assets/bg1.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+/* creating a footer class to make it stay at the bottom */
+.ft {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  
+}
+
+/* creating a wrapper to keep windows size the same */
+.wrapper {
+  box-sizing: border-box;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

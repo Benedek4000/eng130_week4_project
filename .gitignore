@@ -1,9 +1,13 @@
+
 backend/flaskr/__pycache__/
 .idea/
 virtualisation
 backend/database_test.py
 VMs/
+backend/Abdellah_testing/__pycache__
 backend/__pycache__
+.vagrant/
+ubuntu-bionic-18.04-cloudimg-console.log
 /backend/jorge_test/app/in/
 /backend/jorge_test/app/out/
 /backend/jorge_test/app/shots/
