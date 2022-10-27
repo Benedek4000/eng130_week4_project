@@ -17,7 +17,7 @@ class DBConnector:
         self.close_db()
 
     # initialise connection to database
-    def __init__(self, user, password, host, port, db_name, collection):
+    def __init__(self, host, port, db_name, collection):
         try:
             #self.client = pymongo.MongoClient(f'mongodb://{user}:{password}@{host}:{port}')
             self.client = pymongo.MongoClient(host, int(port))
