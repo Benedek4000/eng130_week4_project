@@ -1,5 +1,4 @@
 import hashlib
-from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for
 from backend.connectToPostgreSQL import DBConnector as postgresql
 from backend.database_properties import postgresql_properties_global as psql_prop
@@ -162,7 +161,7 @@ def storage():
 
 
 def hash_pw(password, salt="5gz"):
-    return hashlib.md5((password+salt).encode().hexdigest())
+    return hashlib.md5((password+salt).encode()).hexdigest()
 
 
 if __name__ == '__main__':
