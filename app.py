@@ -61,8 +61,8 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    print(request.method)
-    print(request.form.get)
+    print(request.form)
+    # print(request.form.get)
     if request.access_control_request_method == 'POST' and 'email' in request.form.get and 'password' in request.form.get:
         # create session variables to get into the if statement instead of checking for pass and email
         # Create variables for easy access later on
