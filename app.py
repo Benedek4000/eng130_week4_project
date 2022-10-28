@@ -1,4 +1,5 @@
 import hashlib
+# from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for
 from backend.connectToPostgreSQL import DBConnector as postgresql
 from backend.database_properties import postgresql_properties_global as psql_prop
@@ -70,9 +71,9 @@ def signup():
 
         print(request.form.get('firstName'))
         print("Setting variables")
-        firstname = request.form.get('firstname')
-        lastname = request.form.get('lastname')
-        phone_number = request.form.get('phone_number')
+        firstname = request.form.get('firstName')
+        lastname = request.form.get('lastName')
+        phone_number = request.form.get('phoneNum')
         password = request.form.get('password')
         email = request.form.get('email')
 
@@ -89,7 +90,7 @@ def signup():
         # If the account already exist show error and validation checks
         if account > 0:
             print("Account exists")
-            flash('Account already exists!')
+            # flash('Account already exists!')
 
         # elif not re.match(,(phone_number)):
             # flash('Invalid phone Number')
@@ -97,12 +98,12 @@ def signup():
             # Account doesnt exists and the form data is valid, now insert new account into users table
             # cursor.execute("INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES (%s,%s,%s,%s,%s)", (firstname, lastname,phone_number, _hashed_password, email))
             
-            insert_this = f"INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{password}', '{email}');"
+            
             print("Inserting into database")
             with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-                df = db.execute_query(insert_this)                  
+                df = db.execute_query(f"INSERT INTO users (first_name, last_name, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{hash_pw(password)}', '{email}');")                  
             # flash('You have successfully registered!')
-        return render_template("login.html")
+        return redirect(url_for('login'))
 
     elif request.method == 'POST':
         # Form is empty... (no POST data)
