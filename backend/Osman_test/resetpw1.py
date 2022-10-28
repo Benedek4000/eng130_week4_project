@@ -5,7 +5,7 @@ from flask import request, redirect, url_for, render_template, Blueprint
 #from app.models import User
 #import flask_login
 
-@app_routes.route('/password_reset', methods=['GET', 'POST'])
+@app_routes.route('/reset', methods=['GET', 'POST'])
 def reset():
 
     if request.method == 'GET':
