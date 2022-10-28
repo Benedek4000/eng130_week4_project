@@ -8,6 +8,7 @@ from backend.database_properties import postgresql_properties_global as psql_pro
 
 import pandas as pd
 app = Flask(__name__)
+app.secret_key = 'supersecretkey'
 """
 BACKEND STUFF IN FRONTEND FOLDER
 Migrate main.py to app.py
@@ -17,7 +18,7 @@ Migrate main.py to app.py
 @app.route('/')
 def home():
     # Check if user is loggedin
-    if 'loggedin' in session:
+    if session.get('loggedin') == True:
 
         # User is loggedin show them the home page
         return render_template('home.html', email=session['email'])
@@ -33,28 +34,24 @@ def login():
     response.set_cookie('valid', 'false')
         
     
-    if request.method == 'POST' and 'email' in request.form.get and 'password' in request.form.get:
-        email = request.form['email']
-        password = request.form['password']
-
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        email = request.form.get('email')
+        password = request.form.get('password')
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query(
-                'SELECT email, password FROM users WHERE email = %s', (email))
+                f"SELECT email, password FROM users WHERE email = '{email}'")
 
         # Fetch one record and return result
-        account = len(df.index)
-
-        if account == 1:
+        #account = len(df.index)
+        if len(df.index) == 1:
             # password_rs = account['password']
             # print(password_rs)
-
             # If account exists in users table in out database
-            if hash_pw(password) == df['password']:
+            if hash_pw(password) == df.iloc[0,1]:
 
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                session['email'] = account['email']
-
+                session['email'] = df.iloc[:,0]
                 # Redirect to home page
                 return redirect(url_for('home'))
             else:
@@ -95,11 +92,11 @@ def signup():
             df = db.execute_query(
                 f"SELECT email FROM users WHERE email = '{email}';")
 
-        account = len(df.index)
-        print(account)
+        #account = len(df.index)
+        #print(account)
 
         # If the account already exist show error and validation checks
-        if account > 0:
+        if len(df.index) > 0:
             print("Account exists")
             # flash('Account already exists!')
 
