@@ -48,6 +48,7 @@ function validateLoginForm() {
 	}
 }
 
+
 function validateSignUpForm() {
 	// Get the email and password from the form
 	var firstName = document.getElementById('firstName').value;
