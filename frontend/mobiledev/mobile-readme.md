@@ -48,27 +48,28 @@ Our code for this file `activity_main.xml` will be:
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
     </WebView>
 </RelativeLayout>
 ```
 
+2. `MainActivity.java` - This file include all the code required to convert the web app to the mobile app. Some key things required:
 
-2. `MainActivity.java` - This file include all the code required to convert the web app to the mobile app.
+- We need to link our `WebView` defined in `activity_main.xml` to this file.
+- By default, `WebView` does not support `JavaScript` so we have to explicitly Enable it.
+- The default behaviour of the back button is to take us out of the application. We need to overwrite this feature.
 
 ```
-package com.example.myapplication;
+package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;![MicrosoftTeams-image](https://user-images.githubusercontent.com/110366380/198543381-b0f8d154-75a3-438f-bcb6-2f765e85204e.png)
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebResourceRequest;
@@ -76,42 +77,72 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
-    private WebView webView;
 
-    @SuppressLint("SetJavaScriptEnabled")
+    private WebView webView; // Local Variable for WebView
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CustomWebViewClient client =new CustomWebViewClient(this);
-        webView = findViewById(R.id.webView);
+        // To prevent user to leave the app for links clicked
+        CustomWebViewClient client = new CustomWebViewClient(this);
+        webView = findViewById(R.id.webView); // Linking the id to the one in activity_main.xml
+        // To make sure webView uses the client custom webView
         webView.setWebViewClient(client);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://www.quora.com/");
+        webView.getSettings().setJavaScriptEnabled(true); // Enable JavaScript
+        webView.loadUrl("https://www.quora.com"); // Domain name of web app to convert
 
     }
+
     @Override
-    public boolean onKeyDown(int keyCode,KeyEvent event ){
-        if(keyCode== KeyEvent.KEYCODE_BACK && this.webView.canGoBack()){
-            this.webView.goBack();
-            return  true;
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        // If back button is pressed, and its possible to go back
+        if(keyCode == KeyEvent.KEYCODE_BACK && this.webView.canGoBack()){
+            this.webView.goBack(); // Go back to previous page
+            return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event); // If we can't go back, we will exit the application
+    }
+}
+
+// To prevent the user to leave the app and go to external browser.
+class CustomWebViewClient extends WebViewClient {
+    private Activity activity;
+
+    // Constructor
+    public CustomWebViewClient(Activity activity){
+        this.activity = activity;
     }
 
+    // For API  < 24 - These API uses url as string
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView webView, String url){
+        return false; // To load all the links inside the application, True will load in external browser
+    }
+
+    // For API >= 24 = These API uses WebResourceRequest for the url(request)
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest request){
+        return false; // To load all the links inside the application, True will load in external browser
+    }
 }
 ```
 
-## Change Permission
+### Change App Permission - To Allow Internet Access for the app.
 
-We have to give permission for our app to access internet.
+- We have to give permission for our app to access internet - `<uses-permission android:name="android.permission.INTERNET" />`.
+- To use cleartext network traffic, HTTP in our case - `android:usesCleartextTraffic="true"`
+
+The `AndroidManifest.xml` file will be:
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package = "com.example.myapplication">
-    <uses-permission android:name ="android.permission.INTERNET"/>
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -121,8 +152,8 @@ We have to give permission for our app to access internet.
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MyApplication">
-
+        android:theme="@style/Theme.TestApplication"
+        tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -140,6 +171,11 @@ We have to give permission for our app to access internet.
 
 </manifest>
 ```
+
+### Choosing Image Icon for the App
+
+- Right Click on App, Choose New, Image Asset
+
 
 
 ### Checking with Quora
