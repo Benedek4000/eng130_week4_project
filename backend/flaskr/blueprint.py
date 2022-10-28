@@ -11,7 +11,7 @@ def home():
 def index():
     if request.method == "POST":
         press = True
-    return render_template("index.html")
+    return render_template("out.html")
     
 @views.route("/video")
 def video_feed():

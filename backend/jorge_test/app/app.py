@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, url_for
 import cv2
 import datetime, time
 import os, sys
@@ -21,17 +21,17 @@ rec=0
 
 #make shots directory to save pics
 try:
-    os.mkdir('./shots')
+    os.mkdir(url_for("./shots"))
 except OSError as error:
     pass
 
 try:
-    os.mkdir('./in')
+    os.mkdir(url_for("./in"))
 except OSError as error:
     pass
 
 try:
-    os.mkdir('./out')
+    os.mkdir(url_for("./out"))
 except OSError as error:
     pass
 
