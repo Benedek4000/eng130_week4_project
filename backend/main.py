@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.secret_key = 'whatever' 
 
 @app.route('/')
-
 def home():
     # Check if user is loggedin
     if 'loggedin' in session:
@@ -23,7 +22,6 @@ def home():
 
 
 @app.route('/login/', methods=['GET', 'POST'])
-
 def login():
     
     #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)

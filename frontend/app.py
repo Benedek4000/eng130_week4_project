@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
+"""
+BACKEND STUFF IN FRONTEND FOLDER
+Migrate main.py to app.py 
+"""
+
 
 @app.route('/')
 def home():
@@ -13,16 +18,19 @@ def login():
         return 'welcome to practice page'
     else:
         return render_template('login.html')
-    
-@app.route('/signup', methods=['GET','POST'])
+
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     return render_template('signup.html')
 
-@app.route('/forgotPassword', methods=['GET','POST'])
+
+@app.route('/forgotPassword', methods=['GET', 'POST'])
 def forgotpassword():
     return render_template('forgotpassword.html')
 
-@app.route('/reset', methods=['GET','POST'])
+
+@app.route('/reset', methods=['GET', 'POST'])
 def reset():
     return render_template('passwordReset.html')
 
