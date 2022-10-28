@@ -1,7 +1,7 @@
 import hashlib
 from flask import Flask, render_template, request, flash,  session, redirect, url_for
 from backend.connectToPostgreSQL import DBConnector as postgresql
-from backend.database_properties import postgresql_properties_local as psql_prop
+from backend.database_properties import postgresql_properties_global as psql_prop
 
 
 import pandas as pd
@@ -81,7 +81,7 @@ def signup():
         print("Querying database")
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query(
-                'SELECT email FROM users WHERE email = %s', (email))
+                f"SELECT email FROM users WHERE email = '{email}';")
 
         account = len(df.index)
         print(account)
@@ -98,10 +98,9 @@ def signup():
             # cursor.execute("INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES (%s,%s,%s,%s,%s)", (firstname, lastname,phone_number, _hashed_password, email))
             print("Inserting into database")
             with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
-                df = db.execute_query("INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES (%s,%s,%s,%s,%s)", (
-                    firstname, lastname, phone_number, hash_pw(password), email))
-            flash('You have successfully registered!')
-        return redirect(url_for("login.html"))
+                df = db.execute_query(f"INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{password}', '{email}');")                  
+            # flash('You have successfully registered!')
+        return render_template("login.html")
 
     elif request.method == 'POST':
         # Form is empty... (no POST data)
