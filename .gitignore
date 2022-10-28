@@ -1,5 +1,4 @@
 __pycache__/
-Backend/__pycache__
+Backend/__pycache__/
 Backend/database_test.py
 VMs
-

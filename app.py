@@ -17,7 +17,7 @@ Migrate main.py to app.py
 @app.route('/')
 def home():
     # Check if user is loggedin
-    if session.get('loggedin') == True:
+    if session.get('loggedin'):
 
         # User is loggedin show them the home page
         return render_template('home.html', email=session['email'])
