@@ -1,39 +1,41 @@
 const formSignUp = document.getElementById('signUpForm');
 
-if (formSignUp) {
-	formSignUp.addEventListener('submit', (e) => {
-		e.preventDefault();
+// if (formSignUp) {
+// 	formSignUp.addEventListener('submit', (e) => {
+// 		e.preventDefault();
 
-		console.log('Hello');
+// 		console.log('Hello');
 
-		// Get form data from the form
-		var firstName = document.getElementById('firstName').value;
-		var lastName = document.getElementById('lastName').value;
-		var email = document.getElementById('email').value;
-		var password = document.getElementById('password').value;
-		var comPassword = document.getElementById('confirmPassword').value;
-		//stringify the data
+// 		// Get form data from the form
+// 		var firstName = document.getElementById('firstName').value;
+// 		var lastName = document.getElementById('lastName').value;
+// 		var email = document.getElementById('email').value;
+// 		var password = document.getElementById('password').value;
+// 		var comPassword = document.getElementById('confirmPassword').value;
+// 		//stringify the data
 
-		const data = JSON.stringify({
-			firstName,
-			lastName,
-			email,
-			password,
-			comPassword,
-		});
+// 		const data = JSON.stringify({
+// 			firstName,
+// 			lastName,
+// 			email,
+// 			password,
+// 			comPassword,
+// 		});
 
-		// Send the data to the server
-		fetch('/api/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: data,
-		});
-	});
-} else {
-	console.log('The Form is not found');
-}
+// 		console.log("we in")
+// 		// Send the data to the server
+// 		// fetch('/api/signup', {
+// 		// 	method: 'POST',
+// 		// 	headers: {
+// 		// 		'Content-Type': 'application/json',
+// 		// 	},
+// 		// 	body: data,
+// 		// });
+
+// 	});
+// } else {
+// 	console.log('The Form is not found');
+// }
 
 function validateLoginForm() {
 	// Get the email and password from the form
@@ -90,9 +92,9 @@ function validatePassword() {
 	if (pass.value.search(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/) < 0) {
 		alert('Password must contain at least one special character');
 		return false;
-	} else {
-		return true;
 	}
+	return true;
+
 }
 
 function validateEmail() {

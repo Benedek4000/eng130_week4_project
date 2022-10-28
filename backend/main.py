@@ -5,7 +5,7 @@ from database_properties import postgresql_properties_local as psql_prop
 #from curses import flash
 import hashlib
 import re
-from forms import EmailForm, PasswordForm
+# from forms import EmailForm, PasswordForm
 
 app = Flask(__name__)
 app.secret_key = 'whatever' 
@@ -14,6 +14,7 @@ app.secret_key = 'whatever'
 def home():
     # Check if user is loggedin
     if 'loggedin' in session:
+        # maybe if session.loggedin instaed
     
         # User is loggedin show them the home page
         return render_template('home.html', email=session['email'])
