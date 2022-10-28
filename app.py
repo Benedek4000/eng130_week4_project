@@ -1,6 +1,7 @@
 import hashlib
+from urllib import response
 # from readline import insert_text
-from flask import Flask, render_template, request, flash,  session, redirect, url_for
+from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response
 from backend.connectToPostgreSQL import DBConnector as postgresql
 from backend.database_properties import postgresql_properties_global as psql_prop
 
@@ -25,8 +26,14 @@ def home():
     return redirect(url_for('login'))
 
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    
+    response = make_response(render_template('login.html'))
+    response.set_cookie('valid', 'false')
+        
+    
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form.get('email')
         password = request.form.get('password')
@@ -54,20 +61,23 @@ def login():
             # Account doesnt exist or username/password incorrect
             flash('Incorrect Email/password')
 
-    return render_template('login.html')
+    return response
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    print(request.form)
-    # print(request.form.get)
-    print(request.form.get("email"))
-    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+
+    print(request.cookies.get("valid"))
+
+    if request.method == 'POST' and request.cookies.get("valid") == "true":
         # create session variables to get into the if statement instead of checking for pass and email
         # Create variables for easy access later on
-
+        
+        print("\n ========================= \n")
         print(request.form.get('firstName'))
+        
         print("Setting variables")
+        
         firstname = request.form.get('firstName')
         lastname = request.form.get('lastName')
         phone_number = request.form.get('phoneNum')
@@ -76,6 +86,7 @@ def signup():
 
         # Check if account exists using MySQL
         # cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+        print("\n ========================= \n")
         print("Querying database")
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query(
@@ -102,11 +113,10 @@ def signup():
             # flash('You have successfully registered!')
         return redirect(url_for('login'))
 
-    elif request.method == 'POST':
+    elif request.method == 'POST' and request.cookies.get("valid") == "false":
         # Form is empty... (no POST data)
         print("Form not complete")
         # flash('Please fill out the form!')
-    print("we good")
 
     # if request.method == "POST":
     #     return render_template("home.html")
