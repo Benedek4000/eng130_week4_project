@@ -29,8 +29,12 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
     response = make_response(render_template('login.html'))
+    response.set_cookie('email', 'jorge@sfsadf')
+
+    print(request.cookies.get('email'))
+    
+    
     response.set_cookie('valid', 'false')
         
     
@@ -66,7 +70,7 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
+    
     print(request.cookies.get("valid"))
 
     if request.method == 'POST' and request.cookies.get("valid") == "true":
