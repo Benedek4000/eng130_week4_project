@@ -72,9 +72,9 @@ def signup():
         print("Setting variables")
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
-        phone_number = request.form.get['phone_number']
-        password = request.form.get['password']
-        email = request.form.get['email']
+        phone_number = request.form.get('phone_number')
+        password = request.form.get('password')
+        email = request.form.get('email')
 
         # Check if account exists using MySQL
         # cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
@@ -101,6 +101,7 @@ def signup():
                 df = db.execute_query("INSERT INTO users (firstname, lastname, phone_number, password, email) VALUES (%s,%s,%s,%s,%s)", (
                     firstname, lastname, phone_number, hash_pw(password), email))
             flash('You have successfully registered!')
+        return redirect(url_for("login.html"))
 
     elif request.method == 'POST':
         # Form is empty... (no POST data)
