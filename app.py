@@ -63,14 +63,15 @@ def login():
 def signup():
     print(request.form)
     # print(request.form.get)
-    if request.access_control_request_method == 'POST' and 'email' in request.form.get and 'password' in request.form.get:
+    print(request.form.get("email"))
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         # create session variables to get into the if statement instead of checking for pass and email
         # Create variables for easy access later on
 
-        print(request.form['firstname'])
+        print(request.form.get('firstName'))
         print("Setting variables")
-        firstname = request.form.get['firstname']
-        lastname = request.form.get['lastname']
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
         phone_number = request.form.get['phone_number']
         password = request.form.get['password']
         email = request.form.get['email']
