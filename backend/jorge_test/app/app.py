@@ -108,6 +108,8 @@ def joining():
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
     name = "./out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
+    # with mongodb(host=db_m['host'], port=db_m['port'], db_name=db_m['db_name'], collection=db_m['collection']) as db:
+    #   ids = db.insert_documents([{'user_id': INSERT USERID HERE, 'filename': INSERT FILENAME HERE, 'file': INSERT FILE HERE}])
     return
 
 def audio_speed():
