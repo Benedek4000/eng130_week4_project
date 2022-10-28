@@ -9,7 +9,7 @@
     <div class="container" style="text-align: center;"> 
         <h2>Video Title: </h2>
         <p>~ Video goes here ~</p>
-        <img src="../static/assets/VideoPlayer.png" alt="Placeholder" style="width: 300px; height: 250px;">
+        <img src="{{ url_for('video_feed') }}" width="400">
         <p style="text-align: bottom;"> Video Description</p>
        </div>
 {% endblock %}
