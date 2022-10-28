@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Email
 
 # form to request user to input their email
 
-class EmailForm(Form):
+class EmailForm(Form): 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
 # this is the form the user will get when they click on the password reset link

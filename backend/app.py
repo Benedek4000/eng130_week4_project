@@ -1,4 +1,6 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
+from flask_mail import Mail
+from flask_mail import Message
 from connectToPostgreSQL import DBConnector as postgresql
 import pandas as pd
 from database_properties import postgresql_properties_local as psql_prop
@@ -130,7 +132,7 @@ def hash_pw(password, salt="5gz"):
 
 @app.route('/logout')
 def logout():
-    # Remove session data, this will log the user out
+   # Remove session data, this will log the user out
    session.pop('loggedin', None)
    session.pop('email', None)
    # Redirect to login page
@@ -193,6 +195,30 @@ def reset_with_token(token):
 
     return render_template('reset_with_token.html', form=form, token=token)
 
+# ------Password Reset link
+app = Flask(__name__)
+
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'mosman196@gmail.com'
+app.config['MAIL_PASSWORD'] = 'csmleswbunbxjqhz'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
+
+
+@app.route("/")
+def index():
+    msg = Message('Password reset', sender='mosman196@gmail.com', recipients=['apedros100@gmail.com'])
+    msg.body = "Please click on the below link to reset your password"
+    mail.send(msg)
+    return "Password reset link has been sent! Please check your inbox."
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

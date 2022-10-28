@@ -1,7 +1,7 @@
 from flask import redirect, url_for, render_template
 from connectToPostgreSQL import DBConnector as postgresql
 import pandas as pd
-from database_properties import postgresql_properties
+from database_properties import postgresql_properties as db_p
 from .forms import PasswordForm
 
 
@@ -25,8 +25,8 @@ def reset_with_token(token):
 
         # adds the user to the database
 
-        db.session.add(user)
-        db.session.commit()
+        with postgresql(host=db_p['host'], db_name=db_p['db_name'], user=db_p['user'], password=db_p['password'], port=db_p['port']) as db:
+            db.execute_query(f"UPDATE Users SET password = '{hash_pw(password)}' WHERE email = '{email}';")
 
         # takes user to sign in page to use the new password
 
