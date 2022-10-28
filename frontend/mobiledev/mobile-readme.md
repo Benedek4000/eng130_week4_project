@@ -184,3 +184,37 @@ The `AndroidManifest.xml` file will be:
   <img src="https://user-images.githubusercontent.com/110366380/198543582-3943a9a6-e5c7-4374-9663-bf0a02de45ba.png">
 </p>          
 
+
+## Setting up Our `Web App` as a `Mobile App`
+
+- To create a web view in mobile for our web app, we first have to run the app.
+- Once we have a running app, we can use the `ip address` of our localhost as the `source ip` for the `mobile app`.
+- To run the app, in `Visual Studio Code` navigate to the `frontend` branch/folder.
+- Run `app.py` by typing `python app.py` on the terminal.
+- We need to have the following packages installed before running the above command.
+  - `Flask` - Python micro framework for web development - `pip install flask`
+  - `OpenCV` - Python package for real-time capture of videos - `pip install opencv-python`
+  - `PyAudio` - Python bindings for PortAudiov19 [**PortAudio** is a free, cross-platform, open-source, audio I/O library] - `pip install PyAudio`
+  - `MoviePy` - Python library for video editing - `pip install moviepy`
+- After we successfully run the command, we can type the ip `127.0.0.1` on the browser's address bar and we get the current version of our web app.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/110366380/198684384-a176002f-3980-4292-a0df-d1d684c9fc5f.png">
+</p>
+
+### Converting the running web app to mobile app
+
+- Now we can replace the above url to our localhost address.
+```
+ webView.loadUrl("http:10.0.2.2");
+```
+**Imp Note**: In Android, to access the local host we used `10.0.2.2`.
+
+#### Sample screenshots of our `Mobile App`
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/110366380/198686574-9dd085fb-67b6-4e40-a930-1676f08f0852.png">
+  <img src="https://user-images.githubusercontent.com/110366380/198686868-1b47d4f7-d1c9-4f4c-a8fd-0d50bde3298a.png">
+  <img src="https://user-images.githubusercontent.com/110366380/198686904-2659672b-bbde-4981-b21d-ba173486b687.png">
+</p>
+
