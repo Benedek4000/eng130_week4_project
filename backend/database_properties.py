@@ -4,7 +4,7 @@ postgresql_properties_local={
     'host': '127.0.0.1',
     'port': '22',
     'user': 'postgres',
-    'password': 'spartaglobal',
+    'password': 'jorge2022',
     'db_name': 'users'
 }
 

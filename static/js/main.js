@@ -12,7 +12,9 @@ function validateLoginForm() {
 	// Get the email and password from the form
 	var email = document.getElementById('email').value;
 	var password = document.getElementById('password').value;
-	setCookie("email", email, 1)
+	
+	
+	
 
 	// Check if email and password is empty
 	if (email == '' || password == '') {
@@ -32,6 +34,7 @@ function validateSignUpForm() {
 	var phone = document.getElementById('phoneNum').value;
 	var password = document.getElementById('password').value;
 	var comPassword = document.getElementById('confirmPassword').value;
+	
 
 	// Check if all feilds are empty
 

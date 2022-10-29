@@ -3,12 +3,12 @@ from urllib import response
 # from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response
 from backend.connectToPostgreSQL import DBConnector as postgresql
-from backend.database_properties import postgresql_properties_global as psql_prop
+from backend.database_properties import postgresql_properties_local as psql_prop
 
 
 import pandas as pd
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.config['SECRET_KEY'] = 'supersecretkey'
 """
 BACKEND STUFF IN FRONTEND FOLDER
 Migrate main.py to app.py
@@ -17,11 +17,13 @@ Migrate main.py to app.py
 
 @app.route('/')
 def home():
+    
     # Check if user is loggedin
-    if session.get('loggedin'):
-
+    #if request.cookies.get('email') != None:
+    
+    if 'loggedin' in session and session['loggedin']:
         # User is loggedin show them the home page
-        return render_template('home.html', email=session['email'])
+        return render_template('home.html', email=session['last_name'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -29,24 +31,20 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    response = make_response(render_template('login.html'))
-    response.set_cookie('email', 'jorge@sfsadf')
+    
+    if request.cookies.get('email') != None:
+        print(request.cookies.get('email'))
+        return redirect(url_for('home'))
 
-    print(request.cookies.get('email'))
-    
-    
-    response.set_cookie('valid', 'false')
-        
-    
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form.get('email')
         password = request.form.get('password')
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query(
-                f"SELECT email, password FROM users WHERE email = '{email}'")
+                f"SELECT email, password, last_name FROM users WHERE email = '{email}'")
 
         # Fetch one record and return result
-        #account = len(df.index)
+        
         if len(df.index) == 1:
             # password_rs = account['password']
             # print(password_rs)
@@ -55,9 +53,14 @@ def login():
 
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                session['email'] = df.iloc[:,0]
+                session['email'] = df.iloc[0,0]
+                session['last_name'] = df.iloc[0,2]
+
+                # respo = make_response(render_template('login.html'))
+                # respo.set_cookie('email', email)
+                
                 # Redirect to home page
-                return redirect(url_for('home'))
+                return redirect(url_for("home"))
             else:
                 # Account doesnt exist or username/password incorrect
                 flash('Incorrect Email/password')
@@ -65,7 +68,7 @@ def login():
             # Account doesnt exist or username/password incorrect
             flash('Incorrect Email/password')
 
-    return response
+    return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -170,6 +173,12 @@ def storage():
     # Check if user is loggedin
     if 'loggedin' in session:
         return render_template('storage.html')
+
+@app.route("/test/<t>")
+def test(t):
+    m = t
+    print(t)
+    return f"test {m}"
 
 
 def hash_pw(password, salt="5gz"):
