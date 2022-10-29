@@ -19,14 +19,32 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
 		<div class="container-fluid relative">
+			
+			{% with messages = get_flashed_messages(with_categories=true) %} {% if
+				messages %} {% for category, message in messages %} {% if category ==
+				'error' %}
+				<div class="alert alert-danger alter-dismissable fade show" role="alert">
+				  {{ message }}
+				  <button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				{% else %}
+				<div class="alert alert-success alter-dismissable fade show" role="alert">
+				  {{ message }}
+				  <button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				{% endif %} {% endfor %} {% endif %} {% endwith %}
 			<div class="row">
 				<div class="col-md-6 absolute left-half" style="height: 800px">{% block form1%} {% endblock %}</div>
 
 				<div class="col-md-6 col-sm-12 m" style="background-color: #293241">{% block formInfo%} {% endblock %}</div>
 			</div>
 		</div>
-
-		{% block body %} {% endblock %}
+		
+		
 	</body>
 	<script src="../static/js/main.js"></script>
 </html>

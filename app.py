@@ -41,7 +41,7 @@ def login():
         password = request.form.get('password')
         with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
             df = db.execute_query(
-                f"SELECT email, password, last_name FROM users WHERE email = '{email}'")
+                f"SELECT email, password, last_name, user_id FROM users WHERE email = '{email}'")
 
         # Fetch one record and return result
         
@@ -55,6 +55,8 @@ def login():
                 session['loggedin'] = True
                 session['email'] = df.iloc[0,0]
                 session['last_name'] = df.iloc[0,2]
+                session['id'] = str(df.iloc[0,3])
+                
 
                 # respo = make_response(render_template('login.html'))
                 # respo.set_cookie('email', email)
@@ -63,10 +65,10 @@ def login():
                 return redirect(url_for("home"))
             else:
                 # Account doesnt exist or username/password incorrect
-                flash('Incorrect Email/password')
+                flash('Incorrect Email/password', category='error')
         else:
             # Account doesnt exist or username/password incorrect
-            flash('Incorrect Email/password')
+            flash('Incorrect Email/password', category='error')
 
     return render_template("login.html")
 
