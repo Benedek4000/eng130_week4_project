@@ -23,7 +23,7 @@ def home():
     
     if 'loggedin' in session and session['loggedin']:
         # User is loggedin show them the home page
-        return render_template('home.html', email=session['last_name'])
+        return render_template('home.html', last_name=session['last_name'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -62,6 +62,8 @@ def login():
                 # respo.set_cookie('email', email)
                 
                 # Redirect to home page
+                flash("Logged in success", category="true")
+                
                 return redirect(url_for("home"))
             else:
                 # Account doesnt exist or username/password incorrect
@@ -77,6 +79,10 @@ def login():
 def signup():
     
     print(request.cookies.get("valid"))
+
+    if 'loggedin' in session and session['loggedin']==True:
+        # User is loggedin show them the home page
+        return redirect(url_for('home'))
 
     if request.method == 'POST' and request.cookies.get("valid") == "true":
         # create session variables to get into the if statement instead of checking for pass and email
@@ -106,8 +112,8 @@ def signup():
 
         # If the account already exist show error and validation checks
         if len(df.index) > 0:
-            print("Account exists")
-            # flash('Account already exists!')
+            
+            flash('Account already exists!', category="error")
 
         # elif not re.match(,(phone_number)):
             # flash('Invalid phone Number')
@@ -119,13 +125,13 @@ def signup():
             print("Inserting into database")
             with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
                 df = db.execute_query(f"INSERT INTO users (first_name, last_name, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{hash_pw(password)}', '{email}');")                  
-            # flash('You have successfully registered!')
-        return redirect(url_for('login'))
+            flash('You have successfully registered!', category="true")
+            return redirect(url_for('login'))
 
     elif request.method == 'POST' and request.cookies.get("valid") == "false":
         # Form is empty... (no POST data)
-        print("Form not complete")
-        # flash('Please fill out the form!')
+        
+        flash('Please fill out the form!', category="error")
 
     # if request.method == "POST":
     #     return render_template("home.html")
@@ -138,6 +144,8 @@ def logout():
     # Remove session data, this will log the user out
     session.pop('loggedin', None)
     session.pop('email', None)
+    session.pop('last_name', None)
+    session.pop('id', None)
     # Redirect to login page
     return redirect(url_for('login'))
 
