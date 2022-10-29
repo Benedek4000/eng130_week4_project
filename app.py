@@ -153,36 +153,47 @@ def logout():
 @app.route('/forgotPassword', methods=['GET', 'POST'])
 def forgotpassword():
     # Check if user is loggedin
-    # if 'loggedin' in session:
+    if 'loggedin' in session and session['loggedin']:
+        return redirect(url_for("home"))
     return render_template('forgotpassword.html')
 
 
 @app.route('/reset', methods=['GET', 'POST'])
 def reset():
     # Check if user is loggedin
-    # if 'loggedin' in session:
+    if 'loggedin' in session and session['loggedin']:
+        return redirect(url_for("home"))
     return render_template('passwordReset.html')
 
 
 @app.route('/videoplayer')
 def player():
     # Check if user is loggedin
-    if 'loggedin' in session:
+    if 'loggedin' in session and session['loggedin']:
         return render_template('video_player.html')
+    else:
+        flash("You need to be logged in to use this website", category="error")
+        return redirect(url_for("login"))
 
 
 @app.route('/videorec')
 def videorec():
     # Check if user is loggedin
-    if 'loggedin' in session:
+    if 'loggedin' in session and session['loggedin']:
         return render_template('video_rec.html')
+    else:
+        flash("You need to be logged in to use this website", category="error")
+        return redirect(url_for("login"))
 
 
 @app.route('/storage')
 def storage():
     # Check if user is loggedin
-    if 'loggedin' in session:
+    if 'loggedin' in session and session['loggedin']:
         return render_template('storage.html')
+    else:
+        flash("You need to be logged in to use this website", category="error")
+        return redirect(url_for("login"))
 
 @app.route("/test/<t>")
 def test(t):
