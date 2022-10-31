@@ -3,9 +3,7 @@
 import pymongo
 import sys
 import moviepy.editor as mp
-import numpy as np
 import pickle
-from bson.objectid import ObjectId
 from bson.binary import Binary
 from connectToPostgreSQL import DBConnector as postgresql
 from database_properties import postgresql_properties_local as db_p
@@ -17,7 +15,7 @@ class DBConnector:
 
     #used for print(db) 
     def __str__(self):
-        return 60*'-'+'\n'+'\n'.join(f"email: {i['email']}   video_id: {i['video_id']}   frame_no: {i['frame_no']}" for i in tqdm(self.coll.find({})))+'\n'+60*'-'
+        return 60*'-'+'\n'+'\n'.join(f"email: {i['email']}   video_id: {i['video_id']}   frame_no: {i['frame_no']}" for i in self.coll.find({}))+'\n'+60*'-'
 
     # enable usage of 'with'
     def __enter__(self):
@@ -52,28 +50,28 @@ class DBConnector:
     # get documents from database. returns zero, one or more documents
     def get_video(self, video_id):
         try:
-            framedicts = self.coll.find({'video_id': video_id}).sort('frame_no', 1).allow_disk_use(True)
             frames = []
-            for index, frame in enumerate(framedicts):
+            for frame in tqdm(self.coll.find({'video_id': video_id}).sort('frame_no', 1).allow_disk_use(True)):
                 frames.append(pickle.loads(frame['frame']))
-            #frames = _to_list_of_np_frames(frames, ndarray_format='THWC')
-            clip = mp.ImageSequenceClip(frames, fps=20)
-            return clip
+            return mp.ImageSequenceClip(frames, fps=20)
+            #return mp.ImageSequenceClip(list(pickle.loads(frame['frame']) for frame in self.coll.find({'video_id': video_id}).sort('frame_no', 1).allow_disk_use(True)), fps=20)
         except Exception as e:
             print(f"Error retrieving data from MongoDB: {e}")
             return None
 
     # insert one or more documents to database. returns inserted IDs
-    def insert_video(self, email, video_file_name):  # pass document(s) as a dictionary or as a list of dictionaries
+    def insert_video(self, email, video_file_name, video_id=None):  # pass document(s) as a dictionary or as a list of dictionaries
         try:
             with postgresql(host=db_p['host'], db_name=db_p['db_name'], user=db_p['user'], password=db_p['password'], port=db_p['port']) as dbsql:
                 clip = mp.VideoFileClip(video_file_name)
                 frames = list(value for value in clip.iter_frames())
+                del clip
                 df = dbsql.execute_query(f"SELECT object_id FROM Videos WHERE email = '{email}'")
-                if df.empty:
-                    video_id = 1
-                else:
-                    video_id = max(int(value) for value in df.iloc[:,0].to_list()) + 1
+                if video_id == None:    
+                    if df.empty:
+                        video_id = 1
+                    else:
+                        video_id = max(int(value) for value in df.iloc[:,0].to_list()) + 1
                 dbsql.execute_query(f"INSERT INTO Videos(email, object_id) VALUES ('{email}', '{video_id}')")
                 docs_to_insert = []
                 for index, frame in enumerate(frames):
