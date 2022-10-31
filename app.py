@@ -129,6 +129,7 @@ def joining():
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
     name = "./out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
+    
     return
 
 def audio_speed():

@@ -1,8 +1,11 @@
 # by Benedek Kovacs
 
 import pymongo
+import gridfs
 import sys
 from bson.objectid import ObjectId
+from connectToPostgreSQL import DBConnector as postgresql
+from database_properties import postgresql_properties_local as db_p
 
 
 # class used to connect to a mongodb database
@@ -10,7 +13,7 @@ class DBConnector:
 
     #used for print(db) 
     def __str__(self):
-        return 60*'-'+'\n'+'\n'.join(str(i) for i in self.get_documents(value=None))+'\n'+60*'-'
+        return 60*'-'+'\n'+'\n'.join(str(i) for i in self.fs.list())+'\n'+60*'-'
 
     # enable usage of 'with'
     def __enter__(self):
@@ -21,12 +24,11 @@ class DBConnector:
         self.close_db()
 
     # initialise connection to database
-    def __init__(self, host, port, db_name, collection):
+    def __init__(self, host, port, db_name):
         try:
             self.client = pymongo.MongoClient(f'mongodb://{host}:{port}')
-            #self.client = pymongo.MongoClient(host, int(port))
             self.db = self.client[db_name]
-            self.coll = self.db[collection]
+            self.fs = gridfs.GridFS(self.db)
             print('Successfully connected to MongoDB Platform')
         except Exception as e:
             print(f'Error connecting to MongoDB Platform: {e}')
@@ -44,24 +46,19 @@ class DBConnector:
             print('Connection does not exist.')
 
     # get documents from database. returns zero, one or more documents
-    def get_documents(self, key='_id', value=None):
+    def get_video(self, object_id):
         try:
-            if value==None:
-                documents = list(self.coll.find({}))
-            else:
-                if key == '_id':
-                    documents = list(self.coll.find({key: ObjectId(value)}))
-                else:
-                    documents = list(self.coll.find({key: value}))
-            return documents
+            return self.fs.get(ObjectId(object_id))
         except Exception as e:
             print(f"Error retrieving data from MongoDB: {e}")
             return None
 
     # insert one or more documents to database. returns inserted IDs
-    def insert_documents(self, documents):  # pass document(s) as a dictionary or as a list of dictionaries
+    def insert_video(self, email, video_file):  # pass document(s) as a dictionary or as a list of dictionaries
         try:
-            return self.coll.insert_many(documents).inserted_ids
+            with postgresql(host=db_p['host'], db_name=db_p['db_name'], user=db_p['user'], password=db_p['password'], port=db_p['port']) as db:
+                db.execute_query(f"INSERT INTO Videos(email, object_id) VALUES ('{email}', '{(self.fs.put(data=video_file))}')")
+            return None
         except Exception as e:
             print(f"Error inserting data into MongoDB: {e}")
             return None
