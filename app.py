@@ -3,7 +3,7 @@ from urllib import response
 # from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response
 from backend.connectToPostgreSQL import DBConnector as postgresql
-from backend.database_properties import postgresql_properties_local as psql_prop
+from backend.database_properties import postgresql_properties_global as psql_prop
 from flask_mail import Mail
 from flask_mail import Message
 import cv2
