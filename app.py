@@ -3,7 +3,8 @@ from urllib import response
 # from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response
 from backend.connectToPostgreSQL import DBConnector as postgresql
-from backend.database_properties import postgresql_properties_global as psql_prop
+from backend.connectToMongoDB import DBConnector as mongodb
+from backend.database_properties import postgresql_properties_global as psql_prop, mongodb_properties_global as db_m
 from flask_mail import Mail
 from flask_mail import Message
 import cv2
@@ -131,7 +132,8 @@ def joining():
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
     name = "./static/out"+now+".mp4"
     f.write_videofile(name, fps = 20)
-
+    with mongodb(host=db_m['host'], port=db_m['port'], db_name=db_m['db_name'], collection=db_m['collection']) as db:
+        db.insert_video(email=session['email'], video_file_name=name, video_id=now)
 
     return
 
