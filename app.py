@@ -15,6 +15,8 @@ from threading import Thread
 import pyaudio
 import wave
 import moviepy.editor as m
+from ipapi import location as ip
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 """
@@ -55,7 +57,7 @@ try:
 except OSError as error:
     pass
 
-
+camera = cv2.VideoCapture(0)
 
 def record(out):
     global rec_frame, detection
@@ -129,6 +131,8 @@ def joining():
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
     name = "./out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
+
+
     return
 
 def audio_speed():
@@ -146,7 +150,7 @@ def audio_speed():
 
 def gen_frames():  # generate frame by frame from camera
     global out, capture,rec_frame, grey, detection
-    camera = cv2.VideoCapture(0)
+    # camera = cv2.VideoCapture(0)
     while True:
         success, frame = camera.read() 
         if success:
@@ -413,6 +417,7 @@ def player():
 def videorec():
     global color
     # Check if user is loggedin
+    data = ip(output = 'json')
     if 'loggedin' in session and session['loggedin']:
         global switch,camera
         if request.method == 'POST':
@@ -476,9 +481,9 @@ def videorec():
                             
                     
         elif request.method=='GET':
-            return render_template('video_rec.html', color = color)
+            return render_template('video_rec.html', color = color, data = data, name = session['last_name'])
         
-        return render_template('video_rec.html', color = color)
+        return render_template('video_rec.html', color = color, data = data, name = session['last_name'])
         
     else:
         flash("You need to be logged in to use this website", category="error")
