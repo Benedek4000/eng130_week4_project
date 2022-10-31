@@ -411,13 +411,13 @@ def player():
     else:
         flash("You need to be logged in to use this website", category="error")
         return redirect(url_for("login"))
-
+global data
+data = ip(output = 'json')
 
 @app.route('/videorec', methods=["POST", "GET"])
 def videorec():
-    global color
-    # Check if user is loggedin
-    data = ip(output = 'json')
+    global color, data
+    # data = ip(output = 'json')
     if 'loggedin' in session and session['loggedin']:
         global switch,camera
         if request.method == 'POST':
