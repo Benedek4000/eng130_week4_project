@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title%}{% endblock %} {% block head %}
+{% extends "base.html" %} {% block title%}Video Recording{% endblock %} {% block head %}
 <style>
 	.containerbtn {
 		height: 50px;
@@ -18,10 +18,10 @@
 {% endblock %} {% block body %}
 <div class="container" style="text-align: center">
 	<h2>Start Recording</h2>
-	<p>Video length:</p>
+	<!-- <p>Video length:</p> -->
 	<img src="{{ url_for('video_feed') }}" height="80%">
-	<p style="text-align: left">Name:</p>
-	<p style="text-align: left">Location:</p>
+	<p style="text-align: left">Name: {{ name }}</p>
+	<p style="text-align: left">Location: {{ data.city }}, {{ data.region }}</p>
 </div>
 
 <div class="containerbtn">

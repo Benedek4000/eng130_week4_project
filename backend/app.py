@@ -53,7 +53,7 @@ except OSError as error:
     pass
 
 try:
-    os.mkdir("./static/out")
+    os.mkdir("./out")
 except OSError as error:
     pass
 
@@ -129,10 +129,14 @@ def joining():
     a = m.AudioFileClip("./in/temp.mp3")
     f = v.set_audio(a)
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-    name = "./static/out"+now+".mp4"
+    name = "./out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
+<<<<<<< HEAD
+    
+=======
 
 
+>>>>>>> 07d4cea527b10e3d71ce0af917d33aaa68b68690
     return
 
 def audio_speed():
@@ -495,14 +499,9 @@ def storage():
     
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
-        li = os.listdir('./static/out')
-        
-
-
-
-        return render_template('video_player.html', videos = li)
+        return render_template('storage.html')
     else:
-        flash("You need to be logged in to use this website", category="error", name = session['last_name'])
+        flash("You need to be logged in to use this website", category="error")
         return redirect(url_for("login"))
 
 
