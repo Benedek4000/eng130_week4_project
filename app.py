@@ -492,6 +492,7 @@ def videorec():
 
 @app.route('/storage')
 def storage():
+    
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
         return render_template('storage.html')
