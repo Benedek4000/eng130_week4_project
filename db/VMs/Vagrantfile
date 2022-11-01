@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+
+ config.vm.define "postgresql" do |postgresql|
+  postgresql.vm.box = "ubuntu/focal64"
+  postgresql.vm.network "private_network", ip: "192.168.10.149"
+  postgresql.vm.network :forwarded_port, guest: 5432, host: 22, auto_correct: true
+  postgresql.vm.synced_folder "postgresql_sync", "/home/vagrant/sync"
+  postgresql.vm.provision "shell", path: "provision_postgresql.sh" 
+ end
+
+ config.vm.define "mongodb" do |mongodb|
+  mongodb.vm.box = "ubuntu/focal64"
+  mongodb.vm.network "private_network", ip: "192.168.10.150"
+  mongodb.vm.network :forwarded_port, guest: 27017, host: 22, auto_correct: true
+  mongodb.vm.synced_folder "mongodb_sync", "/home/vagrant/sync"
+  mongodb.vm.provision "shell", path: "provision_mongodb.sh"  
+ end
+
+end

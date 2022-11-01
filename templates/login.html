@@ -1,0 +1,33 @@
+{% extends "baseAuth.html" %} 
+{% block title %}Login Page{% endblock %}
+{% block form1 %}
+<h1 class="text-center">Login</h1>
+<div class="container-fluid justify-content-center rounded" style="background-color: #98c1d9">
+	<form action="/login" method="POST" name="loginForm">
+		<!--Email Input-->
+		<div class="form-group mb-4">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
+		</div>
+		<!--Password Input-->
+		<div class="form-group mb-4">
+			<label for="password">Password</label>
+			<input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+		</div>
+
+		<div class="align-right">
+			<button type="button" class="btn btn-primary" onclick="showPassword() "><i class="fa-sharp fa-solid fa-eye" id="eye-icon"></i></button>
+		</div>
+
+		<div class="row mb-4">
+			<div class="col">
+				<a href="/forgotPassword">Forgot Password?</a>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-primary" onclick="validateLoginForm()">Submit</button>
+	</form>
+</div>
+{% endblock %} {% block formInfo %}
+<h3 class="text-center" style="color: #98c1d9">Don't have an account? <a href="/signup" style="color: #ee6c4d">Register here</a></h3>
+{% endblock %}
