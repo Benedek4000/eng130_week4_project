@@ -14,9 +14,9 @@
   position: fixed;
   left: 0;
   bottom: 0;
+  height: 110px;
   width: 100%;
   text-align: center;
-  
 }
 
 /* creating a wrapper to keep windows size the same */

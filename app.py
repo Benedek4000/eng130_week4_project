@@ -129,7 +129,7 @@ def joining():
     a = m.AudioFileClip("./in/temp.mp3")
     f = v.set_audio(a)
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-    name = "./static/out"+now+".mp4"
+    name = "./static/out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
 
 
