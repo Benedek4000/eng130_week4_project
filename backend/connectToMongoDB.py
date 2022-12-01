@@ -5,8 +5,8 @@ import sys
 import moviepy.editor as mp
 import pickle
 from bson.binary import Binary
-from connectToPostgreSQL import DBConnector as postgresql
-from database_properties import postgresql_properties_local as db_p
+from backend.connectToPostgreSQL import DBConnector as postgresql
+from backend.database_properties import postgresql_properties_local as db_p
 from tqdm import tqdm
 
 
