@@ -1,7 +1,9 @@
+import os, sys
 import hashlib
 from urllib import response
 # from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response
+# sys.path.insert(0, './backend')
 from backend.connectToPostgreSQL import DBConnector as postgresql
 from backend.connectToMongoDB import DBConnector as mongodb
 from backend.database_properties import postgresql_properties_global as psql_prop, mongodb_properties_global as db_m
@@ -9,7 +11,7 @@ from flask_mail import Mail
 from flask_mail import Message
 import cv2
 import datetime, time
-import os, sys
+
 import numpy as np
 import pandas as pd
 from threading import Thread
