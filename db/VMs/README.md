@@ -8,6 +8,6 @@ sudo -u postgres psql
 [FOLLOW INSTRUCTIONS]
 CREATE DATABASE users;
 \c users
-\i /home/vagrant/sync/sqlscripts/create_users_tables.sh
-SELECT* FROM users;
+\i /home/vagrant/sync/sqlscripts/create_users_tables.sql
+SELECT * FROM users;
 ```
