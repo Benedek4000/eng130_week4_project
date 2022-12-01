@@ -1,4 +1,5 @@
 import os, sys
+import os, sys
 import hashlib
 from urllib import response
 # from readline import insert_text
@@ -19,6 +20,8 @@ import pyaudio
 import wave
 import moviepy.editor as m
 from ipapi import location as ip
+import gridfs
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'

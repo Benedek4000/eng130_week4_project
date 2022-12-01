@@ -5,8 +5,8 @@ import sys
 import moviepy.editor as mp
 import pickle
 from bson.binary import Binary
-from .connectToPostgreSQL import DBConnector as postgresql
-from .database_properties import postgresql_properties_local as db_p
+from backend.connectToPostgreSQL import DBConnector as postgresql
+from backend.database_properties import postgresql_properties_local as db_p
 from tqdm import tqdm
 
 
@@ -63,7 +63,7 @@ class DBConnector:
     def insert_video(self, email, video_file_name, video_id=None):  # pass document(s) as a dictionary or as a list of dictionaries
         try:
             with postgresql(host=db_p['host'], db_name=db_p['db_name'], user=db_p['user'], password=db_p['password'], port=db_p['port']) as dbsql:
-                clip = mp.VideoFileClip(video_file_name)
+                clip = mp.VideoFileClip(video_file_name).subclip(0,3)
                 frames = list(value for value in clip.iter_frames())
                 del clip
                 df = dbsql.execute_query(f"SELECT object_id FROM Videos WHERE email = '{email}'")
