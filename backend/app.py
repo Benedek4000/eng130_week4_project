@@ -131,12 +131,6 @@ def joining():
     now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
     name = "./out/"+now+".mp4"
     f.write_videofile(name, fps = 20)
-<<<<<<< HEAD
-    
-=======
-
-
->>>>>>> 07d4cea527b10e3d71ce0af917d33aaa68b68690
     return
 
 def audio_speed():
@@ -151,6 +145,8 @@ def audio_speed():
 
     return
 
+def group2_gridFS():
+    
 
 def gen_frames():  # generate frame by frame from camera
     global out, capture,rec_frame, grey, detection
