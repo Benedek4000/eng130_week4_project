@@ -64,7 +64,7 @@ Docker version 20.10.21, build baeda1f
 docker run -d -p 5000:5000 abishek726/test-python-app-111
 ```
 
-4. If you got to `localhost:5000` in the browser the website should be running
+4. If you go to `localhost:5000` in the browser the website should be running
 
 ## Toolset
 
@@ -156,7 +156,7 @@ EXPOSE 5000
 CMD [ "python", "./app.py" ]
 ```
 
-**Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. each tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
+**Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
 
 **Opencv** - This is a programming library that is aimed at real-time computer vision. Computer vision is a process by which we can understand the images and videos how they are stored and how we can manipulate and retrieve data from them. So we used it to build our camera function. We implemented it with out python flask and we able to build the recording functionality with it using the user's camera module. 
 
