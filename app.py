@@ -416,8 +416,8 @@ def player():
         flash("You need to be logged in to use this website", category="error")
         return redirect(url_for("login"))
 global data
-data = ip(output = 'json')
-
+# data = ip(output = 'json')
+data = "coming soon"
 @app.route('/videorec', methods=["POST", "GET"])
 def videorec():
     global color, data
@@ -509,7 +509,9 @@ def storage():
         flash("You need to be logged in to use this website", category="error", name = session['last_name'])
         return redirect(url_for("login"))
 
-
+@app.route('/test')
+def test():
+    return render_template('video2.html')
 
 
 def hash_pw(password, salt="5gz"):
@@ -517,4 +519,4 @@ def hash_pw(password, salt="5gz"):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80)
+    app.run(debug=True, port=80, host='0.0.0.0')
