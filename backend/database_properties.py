@@ -9,7 +9,7 @@ postgresql_properties_local={
 }
 
 postgresql_properties_global={
-    'host': '86.191.155.199',
+    'host': '86.191.168.203',
     'port': '22',
     'user': 'postgres',
     'password': 'spartaglobal',
@@ -24,7 +24,7 @@ mongodb_properties_local={
 }
 
 mongodb_properties_global={
-    'host': '86.191.155.199',
+    'host': '86.191.168.203',
     'port': '2200',
     'db_name': 'teams_app',
     'collection': 'video_storage'

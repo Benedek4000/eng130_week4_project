@@ -1,7 +1,8 @@
 flask
 opencv-python
-pyaudio
 moviepy
 Flask-Mail
 pandas
 ipapi
+psycopg2
+pymongo

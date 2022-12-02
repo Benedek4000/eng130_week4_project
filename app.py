@@ -1,7 +1,9 @@
+import os, sys
 import hashlib
 from urllib import response
 # from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response
+sys.path.insert(0, './backend')
 from backend.connectToPostgreSQL import DBConnector as postgresql
 from backend.connectToMongoDB import DBConnector as mongodb
 from backend.database_properties import postgresql_properties_global as psql_prop, mongodb_properties_global as db_m
@@ -9,7 +11,6 @@ from flask_mail import Mail
 from flask_mail import Message
 import cv2
 import datetime, time
-import os, sys
 import numpy as np
 import pandas as pd
 from threading import Thread
@@ -17,6 +18,8 @@ import pyaudio
 import wave
 import moviepy.editor as m
 from ipapi import location as ip
+import gridfs
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -58,7 +61,7 @@ try:
 except OSError as error:
     pass
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(cv2.CAP_V4L2)
 
 def record(out):
     global rec_frame, detection
@@ -515,4 +518,4 @@ def hash_pw(password, salt="5gz"):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80)
+    app.run(debug=True, port=5000, host='127.0.0.1')
