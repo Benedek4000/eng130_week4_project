@@ -113,9 +113,19 @@ Content goes here.
 </body>
 </html>
 ```
-**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. so we 
+**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. So when the 
 ###### Docker
 ###### Github
 ###### Opencv
-###### Mongodb
-###### SQL
+Mongodb
+
+used mongodb
+for saving videos using gridfs
+wasnt compatible with python flask
+
+SQL
+
+user data
+postgress sql 
+
+**S3**
