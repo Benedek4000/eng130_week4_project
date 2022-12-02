@@ -1,31 +1,23 @@
 # Video Recording app
+
 ![Alt text](/images/homepage.png)
 
 #### Contributors:
 
-**Frontend**
-
--  [Abishek Aneese](https://github.com/AbisheK0726)
--  [Mohamed Abdikarim Yusuf](https://github.com/MoeShaa123)
--  [Subhaan Hussain](https://github.com/Subzy132)
-
-**Backend**
-
--  [Abdelleh Chehat Bais Pedros](https://github.com/AbdellahChehat)
--  [Bendek Kovacs](https://github.com/Benedek4000)
-- [Jorge Reyes ](https://github.com/Jorge2091)
-
-**Database**
-
--  [Abishek Jha](https://github.com/abhishek-jha-ce)
--  [Angel Gelemerov](https://github.com/AGelemerov)
--  [Aenugu Meghana](https://github.com/meghanasrividya)
+|                         Frontend                         |                             Backend                              |                       Database                       |
+| :------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------: |
+|     [Abishek Aneese](https://github.com/AbisheK0726)     | [Abdelleh Chehat Bais Pedros](https://github.com/AbdellahChehat) |  [Abishek Jha](https://github.com/abhishek-jha-ce)   |
+| [Mohamed Abdikarim Yusuf](https://github.com/MoeShaa123) |         [Bendek Kovacs](https://github.com/Benedek4000)          |   [Angel Gelemerov](https://github.com/AGelemerov)   |
+|      [Subhaan Hussain](https://github.com/Subzy132)      |           [Jorge Reyes ](https://github.com/Jorge2091)           | [Aenugu Meghana](https://github.com/meghanasrividya) |
 
 ## Introduction
-Welcome to eng130 Video Recording app project. In this short introduction, we will inform you on how to get the website integrated in your system with simple steps (as long as our public server is running). 
-## Running on localhost 
 
-The list of requirements needed for this website is listed in requirements.txt, all you need to do is clone this repository into your local machine and `cd eng130_week4_project` to get into the folder. 
+Welcome to eng130 Video Recording app project. In this short introduction, we will inform you on how to get the website integrated in your system with simple steps (as long as our public server is running).
+
+## Running on localhost
+
+The list of requirements needed for this website is listed in requirements.txt, all you need to do is clone this repository into your local machine and `cd eng130_week4_project` to get into the folder.
+
 1. After that is done, run the installation by writing in the command line
 
 ```bash
@@ -61,13 +53,17 @@ Press CTRL+C to quit
 
 1. Download `Docker` on your machine using the official documentation [Docker](https://www.docker.com)
 2. Setup your account and docker desktop and run `docker --version` and you should see
+
 ```bash
 Docker version 20.10.21, build baeda1f
 ```
-3. Now that you have Docker installed Run the image the app is on 
+
+3. Now that you have Docker installed Run the image the app is on
+
 ```bash
 docker run -d -p 5000:5000 abishek726/test-python-app-111
 ```
+
 4. If you got to `localhost:5000` in the browser the website should be running
 
 ## Toolset
@@ -76,7 +72,7 @@ docker run -d -p 5000:5000 abishek726/test-python-app-111
 
 ![Alt text](/images/wireframes/VideoPlayer.png)
 
-**Python** - The fundamental programming language we used to write our funtionalities. We Imported many API's and Libraries provided by python to carry out different functions. 
+**Python** - The fundamental programming language we used to write our funtionalities. We Imported many API's and Libraries provided by python to carry out different functions.
 
 ```python
 import os, sys
@@ -94,28 +90,36 @@ import cv2
 import datetime, time
 ```
 
-**Flask** - A web framework provided by python to allow us to structure our app. It allowed us to easily develop our application using a python file. As long as we had the required dependencies we were able to just run one command and then the app would start. 
+**Flask** - A web framework provided by python to allow us to structure our app. It allowed us to easily develop our application using a python file. As long as we had the required dependencies we were able to just run one command and then the app would start.
+
 ```bash
 python app.py
 ```
-**HTML/CSS** - Python flask allowed us to run our HTML files. These html files were also linked to bootstrap which implemented CSS into our website. What this essentially means is that it makes our website look nice. HTML is the skeleton, CSS is the design(skin) and the javascript carries out the functionality. 
+
+**HTML/CSS** - Python flask allowed us to run our HTML files. These html files were also linked to bootstrap which implemented CSS into our website. What this essentially means is that it makes our website look nice. HTML is the skeleton, CSS is the design(skin) and the javascript carries out the functionality.
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Our Funky HTML Page</title>
-    <meta name="description" content="Our first page">
-    <meta name="keywords" content="html tutorial template">
-</head>
-<body>
-Content goes here.
-</body>
+	<head>
+		<title>Our Funky HTML Page</title>
+		<meta name="description" content="Our first page" />
+		<meta name="keywords" content="html tutorial template" />
+	</head>
+	<body>
+		Content goes here.
+	</body>
 </html>
 ```
-**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. so we 
+
+**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. so we
+
 ###### Docker
+
 ###### Github
+
 ###### Opencv
+
 ###### Mongodb
+
 ###### SQL
