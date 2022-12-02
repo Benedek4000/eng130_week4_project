@@ -112,25 +112,72 @@ python app.py
 </html>
 ```
 
-**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. so we
+**Javascript** - As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. So we used Javascript to validate the user entries before they are actually submitted. Such as: password length, email characters and number digits etc. 
 
-###### Docker
+```javascript
+function validateSignUpForm() {
+	// Get the email and password from the form
+	var firstName = document.getElementById('firstName').value;
+	var lastName = document.getElementById('lastName').value;
+	var email = document.getElementById('email').value;
+	var phone = document.getElementById('phoneNum').value;
+	var password = document.getElementById('password').value;
+	var comPassword = document.getElementById('confirmPassword').value;
+	
+```
 
-###### Github
+**Docker** - Once we created our application and had it working on the localhost we wanted to containerise the application and the database. and the easiest way to do this was to use Docker which is a platform to deliver software in packages. All we had to do was create Docker files and then upload the image onto dockerhub. 
 
-###### Opencv
+```dockerfile
+FROM python as py
 
-Mongodb
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+
+RUN apt update && apt upgrade -y
+RUN apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 -y
+
+RUN pip install pymongo
+RUN pip install pyaudio --user
+RUN pip install flask
+RUN pip install opencv-python
+RUN pip install moviepy
+RUN pip install Flask-Mail
+RUN pip install pandas
+RUN pip install ipapi
+RUN pip install "opencv-python-headless<4.3"
+RUN pip install psycopg2
 
 
-used mongodb
-for saving videos using gridfs
-wasnt compatible with python flask
+COPY . .
 
-SQL
+EXPOSE 5000
+
+CMD [ "python", "./app.py" ]
+```
+
+**Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. each tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
+
+**Opencv** - This is a programming library that is aimed at real-time computer vision. Computer vision is a process by which we can understand the images and videos how they are stored and how we can manipulate and retrieve data from them. So we used it to build our camera function. We implemented it with out python flask and we able to build the recording functionality with it using the user's camera module. 
+
+```python
+camera = cv2.VideoCapture(0)
+
+def record(out):
+    global rec_frame, detection
+    
+    while(rec):
+        time.sleep(0.045)
+        out.write(rec_frame)
+    if mute:
+        v = m.VideoFileClip("./in/temp.avi")
+        e = v.fx(m.vfx.speedx, 1)
+        now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
+        name = "./out/"+now+".mp4"
+        e.write_videofile(name, fps = 20)
+```
+
+**Mongodb** - This is the database program we were originally going to use to store the video footage coming from the application usign GridFS but towards the end of the project we quickly realised that it is not compatible with our flask application so we had to scrap that utility and then use Javascript and S3 buckets to store the videos. 
 
 
-user data
-postgress sql 
-
-**S3**
+**POSTGRESQL** - This was our relational database system. We used it to hold all the information to do with our users such as the login details, sign-up details. So anything to do with the user. The information was stored here. 
