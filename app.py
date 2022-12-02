@@ -14,7 +14,7 @@ import datetime, time
 import numpy as np
 import pandas as pd
 from threading import Thread
-import pyaudio
+# import pyaudio
 import wave
 import moviepy.editor as m
 from ipapi import location as ip
@@ -518,4 +518,4 @@ def hash_pw(password, salt="5gz"):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80)
+    app.run(debug=True, port=5000)
