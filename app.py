@@ -148,7 +148,7 @@ def signup():
             
             
             print("Inserting into database")
-            with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+            with postgresql(host=os.environ["postgres"], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
                 df = db.execute_query(f"INSERT INTO users (first_name, last_name, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{hash_pw(password)}', '{email}');")                  
             flash('You have successfully registered!', category="true")
             return redirect(url_for('login'))
