@@ -1,23 +1,18 @@
 import os, sys
 import hashlib
+import urllib.request
 from urllib import response
 # from readline import insert_text
-from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response
+from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response, jsonify
 sys.path.insert(0, './backend')
 from connectToPostgreSQL import DBConnector as postgresql
 from connectToMongoDB import DBConnector as mongodb
 from database_properties import postgresql_properties_global as psql_prop, mongodb_properties_global as db_m
 from flask_mail import Mail
 from flask_mail import Message
-import cv2
 import datetime, time
-
-import numpy as np
+from werkzeug.utils import secure_filename
 import pandas as pd
-from threading import Thread
-import pyaudio
-import wave
-import moviepy.editor as m
 from ipapi import location as ip
 
 app = Flask(__name__)
@@ -32,17 +27,10 @@ app.config['MAIL_USERNAME'] = 'mosman196@gmail.com'
 app.config['MAIL_PASSWORD'] = 'csmleswbunbxjqhz'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+app.config['UPLOAD_FOLDER'] = './static/uploads/'
+#app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 mail = Mail(app)
-
-global capture,rec_frame, grey, switch, neg, rec, out, detection, mute, color
-color = "#007fff"
-capture=0
-grey=0
-neg=0
-switch=1
-rec=0
-mute = False
 
 #make shots directory to save pics, temp files and videos
 try:
@@ -59,135 +47,10 @@ try:
     os.mkdir("./static/out")
 except OSError as error:
     pass
-
-camera = cv2.VideoCapture(0)
-
-def record(out):
-    global rec_frame, detection
-    
-    while(rec):
-        time.sleep(0.045)
-        out.write(rec_frame)
-    if mute:
-        v = m.VideoFileClip("./in/temp.avi")
-        e = v.fx(m.vfx.speedx, 1)
-        now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-        name = "./out/"+now+".mp4"
-        e.write_videofile(name, fps = 20)
-        
-
-
-def change(p, stream, frames):
-    global rec, mute
-    while rec and not mute:
-        # chunk = 1024  # Record in chunks of 1024 samples
-        # sample_format = pyaudio.paInt16  # 16 bits per sample
-        # channels = 2
-        # fs = 44100  # Record at 44100 samples per second
-        # seconds = 3
-        
-
-        # p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
-        # stream = p.open(format=pyaudio.paInt16,
-        #                 channels=2,
-        #                 rate=44100,
-        #                 frames_per_buffer=2,
-        #                 input=True)
-
-        # Initialize array to store frames
-
-        # Store data in chunks for 3 seconds
-
-
-
-        while rec:
-            data = stream.read(1024)
-            frames.append(data)
-                
-        
-        #     data = stream.read(chunk)t
-        #     frames.append(data)
-        filename = "./in/temp.wav"
-        # Stop and close the stream 
-        stream.stop_stream()
-        stream.close()
-        # Terminate the PortAudio interface
-        p.terminate()
-
-        # Save the recorded data as a WAV file
-        wf = wave.open(filename, 'wb')
-        wf.setnchannels(2)
-        wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
-        wf.setframerate(44100)
-        wf.writeframes(b''.join(frames))
-        wf.close()
-
-        ed = Thread(target = audio_speed)
-        ed.start()
-        return
-
-def joining():
-    v = m.VideoFileClip("./in/temp.avi")
-    a = m.AudioFileClip("./in/temp.mp3")
-    f = v.set_audio(a)
-    now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-    name = "./static/out/"+now+".mp4"
-    f.write_videofile(name, fps = 20)
-    # with mongodb(host=db_m['host'], port=db_m['port'], db_name=db_m['db_name'], collection=db_m['collection']) as db:
-    #     db.insert_video(email=session['email'], video_file_name=name, video_id=now)
-
-    return
-
-def audio_speed():
-    v = m.VideoFileClip("./in/temp.avi")
-    a = m.AudioFileClip("./in/temp.wav")
-    f = a.duration/v.duration
-    e = a.fx(m.vfx.speedx, f)
-    e.write_audiofile("./in/temp.mp3")
-
-    jo = Thread(target = joining)
-    jo.start()
-
-    return
-
-
-def gen_frames():  # generate frame by frame from camera
-    global out, capture,rec_frame, grey, detection
-    # camera = cv2.VideoCapture(0)
-    while True:
-        success, frame = camera.read() 
-        if success:
-            detection = True
-            if(grey):
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            if(neg):
-                frame=cv2.bitwise_not(frame)    
-            if(capture):
-                capture=0
-                now = datetime.datetime.now()
-                p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":",''))])
-                cv2.imwrite(p, frame)
-            
-            if(rec):
-                rec_frame=frame
-                frame= cv2.putText(cv2.flip(frame,1),"Recording...", (0,25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255),4)
-                frame=cv2.flip(frame,1)
-            
-                
-            try:
-                ret, buffer = cv2.imencode('.jpg', cv2.flip(frame,1))
-                frame = buffer.tobytes()
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            except Exception as e:
-                pass
-                
-        else:
-            detection = False
-            flash("Can not detect Camera", category="error")
-            pass
-
+try:
+    os.mkdir("./static/uploads")
+except OSError as error:
+    pass
 
 @app.route('/')
 def home():
@@ -250,11 +113,6 @@ def login():
             flash('Incorrect Email/password', category='error')
 
     return render_template("login.html")
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -421,73 +279,9 @@ data = "coming soon"
 @app.route('/videorec', methods=["POST", "GET"])
 def videorec():
     global color, data
-    # data = ip(output = 'json')
     if 'loggedin' in session and session['loggedin']:
-        global switch,camera
-        if request.method == 'POST':
-            global rec
-            if request.form.get('click') == 'Capture':
-                global capture
-                capture=1
-            elif  request.form.get('grey') == 'Grey':
-                global grey
-                grey=not grey
-            elif  request.form.get('neg') == 'Negative':
-                global neg
-                neg=not neg
-            elif  request.form.get('mute') == 'mute' and not rec:
-                global mute, color
-                
-                if mute:
-                    mute = not mute
-                    color = "#007fff"
-                else:
-                    mute = True
-                    color = "red"
-            elif request.form.get('mute') == 'mute' and rec:
-                flash("Can not mute/unmute when video is recording", category="error")
-                
-                
-               
-            elif  request.form.get('stop') == 'Stop/Start':
-                
-                if(switch==1):
-                    switch=0
-                    camera.release()
-                    cv2.destroyAllWindows()
-                    
-                else:
-                    camera = cv2.VideoCapture(0)
-                    switch=1
-            elif  request.form.get('rec') == 'Start/Stop Recording':
-                global out, frames, p, stream
-                rec= not rec
-                if(rec):
-                    
-                    
-                    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-                    # out = cv2.VideoWriter('vid_{}.avi'.format(str(now).replace(":",'')), fourcc, 20.0, (640, 480))
-                    out = cv2.VideoWriter('./in/temp.avi', fourcc, 20, (640, 480))
-                    #Start new thread for recording the video
-
-                    #audio
-                    p = pyaudio.PyAudio()
-                    stream = p.open(format=pyaudio.paInt16, channels=2, rate=44100, frames_per_buffer=2, input=True)
-                    frames = []
-                    thread = Thread(target = record, args=[out,])
-                    thread.start()
-                    audio = Thread(target = change, args=[p, stream, frames,])
-                    audio.start()
-                elif(rec==False):
-                    
-                    out.release()
-                    
-                            
-                    
-        elif request.method=='GET':
-            return render_template('video_rec.html', color = color, data = data, name = session['last_name'])
         
-        return render_template('video_rec.html', color = color, data = data, name = session['last_name'])
+        return render_template('video2.html')
         
     else:
         flash("You need to be logged in to use this website", category="error")
@@ -509,9 +303,25 @@ def storage():
         flash("You need to be logged in to use this website", category="error", name = session['last_name'])
         return redirect(url_for("login"))
 
-@app.route('/test')
+@app.route('/test', methods=["POST", "GET"])
 def test():
     return render_template('video2.html')
+@app.route('/test2', methods=["POST", "GET"])
+def test2():
+    return render_template('video3.html')
+@app.route('/upload', methods=['POST'])
+def upload():
+    print(request.files)
+    file = request.files['file']
+    if file: 
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # process the file object here! 
+
+        return jsonify(success=True)
+    return jsonify(success=False)
+
+
 
 
 def hash_pw(password, salt="5gz"):

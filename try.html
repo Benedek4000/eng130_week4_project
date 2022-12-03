@@ -40,9 +40,9 @@
             });
         
             media_recorder.addEventListener('stop', function() {
-                let video_local = URL.createObjectURL(new Blob(blobs_recorded, { type: 'video/webm' }));
+                let video_local = new Blob(blobs_recorded, { type: 'video/webm' });
                 download_link.href = video_local;
-        
+                console.log(video_local)
                 stop_button.style.display = 'none';
                 download_link.style.display = 'block';
             });
@@ -55,25 +55,6 @@
         
         stop_button.addEventListener('click', function() {
             media_recorder.stop(); 
-        });
-        
-        
+        });  
     </script>
-    <script>
-        let recording = new File(blobs_recorded, 'recording.webm', { type: 'video/webm' });
-
-        let data = new FormData();
-        data.append('file', recording);
-
-        // send fetch along with cookies
-        let response = await fetch('/upload.php', {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: data
-        });
-    </script>
-    <form action="/login" method="POST" name="loginForm">
-        <button type="submit" class="btn btn-primary" onclick="validateLoginForm()">Submit</button>
-    </form>
-
 </html>
