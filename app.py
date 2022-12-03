@@ -2,18 +2,17 @@ import os, sys
 import hashlib
 import urllib.request
 from urllib import response
-# from readline import insert_text
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response, jsonify
 sys.path.insert(0, './backend')
 from connectToPostgreSQL import DBConnector as postgresql
-from connectToMongoDB import DBConnector as mongodb
-from database_properties import postgresql_properties_global as psql_prop, mongodb_properties_global as db_m
+from database_properties import postgresql_properties_local as psql_prop
 from flask_mail import Mail
 from flask_mail import Message
 import datetime, time
 from werkzeug.utils import secure_filename
 import pandas as pd
 from ipapi import location as ip
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -34,23 +33,10 @@ mail = Mail(app)
 
 #make shots directory to save pics, temp files and videos
 try:
-    os.mkdir("./shots")
-except OSError as error:
-    pass
-
-try:
-    os.mkdir("./in")
-except OSError as error:
-    pass
-
-try:
-    os.mkdir("./static/out")
-except OSError as error:
-    pass
-try:
     os.mkdir("./static/uploads")
 except OSError as error:
     pass
+
 
 @app.route('/')
 def home():
@@ -293,7 +279,7 @@ def storage():
     
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
-        li = os.listdir('./static/out')
+        li = os.listdir('./static/uploads')
         
 
 
@@ -309,15 +295,15 @@ def test():
 @app.route('/test2', methods=["POST", "GET"])
 def test2():
     return render_template('video3.html')
+
 @app.route('/upload', methods=['POST'])
 def upload():
-    print(request.files)
     file = request.files['file']
-    if file: 
-        filename = secure_filename(file.filename)
+    if file:
+        now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
+        filename = now+".webm"
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # process the file object here! 
-
         return jsonify(success=True)
     return jsonify(success=False)
 

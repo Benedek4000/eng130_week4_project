@@ -9,7 +9,7 @@
     <div class="container" style="text-align: center;"> 
         <h2>Video Title: {{ name }}</h2>
         {% for v in videos %} <video width="320" controls>
-            <source src="./static/out/{{ v }}" type="video/mp4">
+            <source src="./static/uploads/{{ v }}" type="video/mp4">
         </video>
         <p>{{ v }}</p>
         {% endfor %}
