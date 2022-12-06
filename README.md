@@ -14,7 +14,7 @@ Once all is installed, export the following and run the app.py by either doing i
 ```bash
 export BUCKET=eng130-videos
 export aws_access_key_id=YOUR_KEY
-export aws_secret_key=YOUR_SECRET_KEY
+export aws_secret_access_key=YOUR_SECRET_KEY
 
 python app.py
 ```
