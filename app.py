@@ -5,7 +5,7 @@ from urllib import response
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response, jsonify
 sys.path.insert(0, './backend')
 from connectToPostgreSQL import DBConnector as postgresql
-from database_properties import postgresql_properties_global as psql_prop
+from database_properties import postgresql_properties_local as psql_prop
 import S3 as s3
 from flask_mail import Mail
 from flask_mail import Message
