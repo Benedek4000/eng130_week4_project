@@ -6,7 +6,7 @@ import logging
 from boto3.s3.transfer import TransferConfig
 
 
-def upload(file_name, bucket, object_name=None):
+def upload(file_name, bucket, object_name=None,expiration=3600):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
@@ -22,11 +22,15 @@ def upload(file_name, bucket, object_name=None):
     # Upload the file
     s3 = boto.client('s3')
     try:
-        response = s3.upload_file(file_name, bucket, object_name)
+        response = s3.upload_file(file_name, bucket, object_name, ExtraArgs={'ACL': 'public-read', 'ContentType': 'video/mp4'})
+        print('https://{b}.s3-eu-west-1.amazonaws.com/{o}'.format(b=bucket, o=object_name))
+        #response = s3.generate_presigned_url('get_object', Params={'Bucket': bucket, 'Key': object_name}, ExpiresIn=expiration)
     except ClientError as e:
         logging.error(e)
         print(e)
     print("\nFile uploaded\n")
+    
+    return response
 
 
 def download(file_name, bucket, object_name=None):
