@@ -295,7 +295,19 @@ def storage():
     
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
-        li = os.listdir('./static/uploads')
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+            df = db.execute_query(
+                f"SELECT video_link FROM Videos WHERE user_id = 1")
+        li = []
+        value = df.to_dict().keys()
+        print(value)
+        print("testing 2")
+        print(df.to_dict().values())
+        print(type(df.to_dict().values()))
+        for k, v in df.to_dict().items():
+            print(v)  # Apply a 10% discount
+
+
         
 
 
@@ -340,7 +352,7 @@ def s3_upload(filename, id):
     with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT video_link FROM Videos WHERE user_id = 1")
-    print(df)
+    
 
 
 def hash_pw(password, salt="5gz"):
