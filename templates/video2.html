@@ -13,7 +13,7 @@
 
     let camera_stream = null;
     let camera_stream2 = null;
-    let media_recorder = null;
+    let media_recorder = null;  
     let blobs_recorded = [];
     let video2 = null;
 
@@ -21,6 +21,8 @@
         camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         camera_stream2 = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = camera_stream2;
+        start_button.style.backgroundColor = "green";
+        stop_button.style.backgroundColor = "red";
     });
 
     start_button.addEventListener('click', function() {
