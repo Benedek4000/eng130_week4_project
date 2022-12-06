@@ -299,16 +299,10 @@ def storage():
             df = db.execute_query(
                 f"SELECT video_link FROM Videos WHERE user_id = 1")
         li = list(df.to_dict()[0].values())
-        for v in li:
-            print(v)
-        
-
-
-        
-
-
-
-        return render_template('video_player.html', videos = li)
+        name = []
+        for n in li:
+            name.append([ n, os.path.split(n)[1]])
+        return render_template('video_player.html', name = name)
     else:
         flash("You need to be logged in to use this website", category="error", name = session['last_name'])
         return redirect(url_for("login"))
@@ -345,9 +339,7 @@ def s3_upload(filename, id):
             df = db.execute_query(f"INSERT INTO Videos (video_title, video_link, user_id) VALUES ('{filename}', 'https://eng130-videos.s3.eu-west-1.amazonaws.com/{filename}', {id});")
         except:
             raise Exception()
-    with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
-            df = db.execute_query(
-                f"SELECT video_link FROM Videos WHERE user_id = 1")
+
     
 
 

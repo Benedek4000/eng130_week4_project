@@ -4,11 +4,11 @@
     
 <h2>Your Videos</h2>
     <div class="container" style="text-align: center;"> 
-        {% for v in videos %}
+        {% for v, n in name %}
         <div>
             <iframe width="300" height="225" src="{{ v }}" allowfullscreen> 
             </iframe>
-            <p>NAME</p>
+            <p>{{ n }}</p>
         </div>
         {% endfor %}
         <!-- <p>~ Video goes here ~</p>
