@@ -4,14 +4,15 @@ import urllib.request
 from urllib import response
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response, jsonify
 sys.path.insert(0, './backend')
-from backend.connectToPostgreSQL import DBConnector as postgresql
-from backend.database_properties import postgresql_properties_global as psql_prop
-import backend.S3 as s3
+from connectToPostgreSQL import DBConnector as postgresql
+from database_properties import postgresql_properties_global as psql_prop
+import S3 as s3
 from flask_mail import Mail
 from flask_mail import Message
 import datetime, time
 from werkzeug.utils import secure_filename
 import pandas as pd
+from threading import Thread as th
 
 
 app = Flask(__name__)
@@ -94,6 +95,7 @@ def login():
                 session['email'] = df.iloc[0,0]
                 session['last_name'] = df.iloc[0,2]
                 session['id'] = str(df.iloc[0,3])
+                print(session['id'])
                 
 
                 # respo = make_response(render_template('login.html'))
@@ -315,16 +317,30 @@ def upload():
     global postgres_ip, postgres_port, bucket_name
     file = request.files['file']
     if file:
-        now = datetime.datetime.now().strftime("%d%m%y%H%M%S")
-        filename = session['id']+now+".mp4"
-        #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        file.save(os.path.join('./', filename))
-        s3.upload(filename, bucket_name, object_name=filename)
+        now = datetime.datetime.now().strftime("%d%m%yI%H%M%S")
+        filename = session['id']+"I"+now+".mp4"
+        id = session['id']
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #file.save(os.path.join('./', filename))
+        # uploading to s4 bucket
+        th(target= s3_upload, args=[filename, id]).start()
         # process the file object here! 
         return jsonify(success=True)
     return jsonify(success=False)
-
-
+def s3_upload(filename, id):
+    s3.upload(f'./static/uploads/{filename}', bucket_name,object_name=filename)
+    os.remove(f"./static/uploads/{filename}")
+    id = int(id)
+    with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+        print("in with")
+        try:    
+            df = db.execute_query(f"INSERT INTO Videos (video_title, video_link, user_id) VALUES ('{filename}', 'https://eng130-videos.s3.eu-west-1.amazonaws.com/{filename}', {id});")
+        except:
+            raise Exception()
+    with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+            df = db.execute_query(
+                f"SELECT video_link FROM Videos WHERE user_id = 1")
+    print(df)
 
 
 def hash_pw(password, salt="5gz"):
