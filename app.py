@@ -5,7 +5,8 @@ from urllib import response
 from flask import Flask, render_template, request, flash,  session, redirect, url_for, make_response, Response, jsonify
 sys.path.insert(0, './backend')
 from connectToPostgreSQL import DBConnector as postgresql
-from database_properties import postgresql_properties_local as psql_prop
+from database_properties import postgresql_properties_global as psql_prop
+import S3
 from flask_mail import Mail
 from flask_mail import Message
 import datetime, time
@@ -36,12 +37,17 @@ try:
 except OSError as error:
     pass
 
-global postgres_ip, postgres_port
+global postgres_ip, postgres_port, bucket_name
+bucket_name=os.environ.get("BUCKET")
 
 foo = os.environ.get("POSTGRES")
-end = foo.find(':', 10)
-postgres_ip = foo[11:end]
-postgres_port = foo[end+1:]
+if foo:
+    end = foo.find(':', 10)
+    postgres_ip = foo[11:end]
+    postgres_port = foo[end+1:]
+else:
+    postgres_ip = psql_prop['host']
+    postgres_port = psql_prop['port']
 
 @app.route('/')
 def home():
@@ -306,12 +312,13 @@ def test2():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    global postgres_ip, postgres_port
+    global postgres_ip, postgres_port, bucket_name
     file = request.files['file']
     if file:
         now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-        filename = now+".webm"
+        filename = session['id']+now+".webm"
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        S3.upload(f'./upload/{filename}', bucket_name, object_name=filename)
         # process the file object here! 
         return jsonify(success=True)
     return jsonify(success=False)
