@@ -6,7 +6,7 @@ import logging
 from boto3.s3.transfer import TransferConfig
 
 
-def upload(file_name, bucket, object_name=None,expiration=3600):
+def upload(file_name, bucket="eng130-videos", object_name=None,expiration=3600):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
