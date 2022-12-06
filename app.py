@@ -11,7 +11,6 @@ from flask_mail import Message
 import datetime, time
 from werkzeug.utils import secure_filename
 import pandas as pd
-from ipapi import location as ip
 
 
 app = Flask(__name__)
@@ -37,6 +36,12 @@ try:
 except OSError as error:
     pass
 
+global postgres_ip, postgres_port
+
+foo = os.environ.get("POSTGRES")
+end = foo.find(':', 10)
+postgres_ip = foo[11:end]
+postgres_port = foo[end+1:]
 
 @app.route('/')
 def home():
@@ -54,6 +59,7 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global postgres_ip, postgres_port
 
     if 'loggedin' in session and session['loggedin']:
         flash("Already logged in!", category="error")
@@ -65,7 +71,7 @@ def login():
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form.get('email')
         password = request.form.get('password')
-        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT email, password, last_name, user_id FROM users WHERE email = '{email}'")
 
@@ -102,6 +108,7 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    global postgres_ip, postgres_port
     
     print(request.cookies.get("valid"))
 
@@ -128,7 +135,7 @@ def signup():
         # cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         print("\n ========================= \n")
         print("Querying database")
-        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT email FROM users WHERE email = '{email}';")
 
@@ -148,7 +155,7 @@ def signup():
             
             
             print("Inserting into database")
-            with postgresql(host=os.environ["postgres"], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+            with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
                 df = db.execute_query(f"INSERT INTO users (first_name, last_name, phone_number, password, email) VALUES ('{firstname}', '{lastname}', '{phone_number}', '{hash_pw(password)}', '{email}');")                  
             flash('You have successfully registered!', category="true")
             return redirect(url_for('login'))
@@ -177,13 +184,14 @@ def logout():
 
 @app.route('/forgotPassword', methods=['GET', 'POST'])
 def forgotpassword():
+    global postgres_ip, postgres_port
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
         return redirect(url_for("home"))
     elif request.method == "POST" and "email" in request.form:
         email = request.form.get("email")
         
-        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT email FROM users WHERE email = '{email}';")
         if len(df.index) == 0:
@@ -197,7 +205,7 @@ def forgotpassword():
             msg.body = f"Please click on the link to reset your password: http://127.0.0.1:80/reset/{y}"
             mail.send(msg)
             
-            with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+            with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
                 db.execute_query(f"UPDATE Users SET password_reset = '{y}' WHERE email = '{email}';")
             flash("Email has been sent, please check your email.", category="true")
             
@@ -212,13 +220,13 @@ global email
 
 @app.route('/reset/<r>', methods=['GET', 'POST'])
 def reset(r):
-    global email
+    global email, postgres_ip, postgres_port
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
         return redirect(url_for("home"))
     if request.method == "POST" and request.form.get("password") == request.form.get("confirmPassword"):
         new_password = request.form.get("password")
-        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
                 db.execute_query(f"UPDATE Users SET password = '{hash_pw(new_password)}' WHERE email = '{email}';")
         flash("Password has been reset", category="true")
         return redirect(url_for("home"))
@@ -232,7 +240,7 @@ def reset(r):
         return redirect(url_for("home"))
     else:
         reset = r
-        with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+        with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT email FROM users WHERE password_reset = '{reset}';")
         if len(df.index) == 0:
@@ -241,7 +249,7 @@ def reset(r):
         else:
             email = df.iloc[0,0]
             print(email)
-            with postgresql(host=psql_prop['host'], db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=psql_prop['port']) as db:
+            with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
                 db.execute_query(f"UPDATE Users SET password_reset = 'FALSE' WHERE email = '{email}';")
             return render_template('passwordReset.html')
 
@@ -264,7 +272,6 @@ global data
 data = "coming soon"
 @app.route('/videorec', methods=["POST", "GET"])
 def videorec():
-    global color, data
     if 'loggedin' in session and session['loggedin']:
         
         return render_template('video2.html')
@@ -276,6 +283,7 @@ def videorec():
 
 @app.route('/storage')
 def storage():
+    global postgres_ip, postgres_port
     
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
@@ -298,6 +306,7 @@ def test2():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    global postgres_ip, postgres_port
     file = request.files['file']
     if file:
         now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
