@@ -9,8 +9,12 @@ The list of requirements needed for this website is listed in requirements.txt, 
 pip install -r requirements.txt
 ```
 
-Once all is installed, run the app.py by either doing it through vscode or any other software or writing in the command line:
+Once all is installed, export the following and run the app.py by either doing it through vscode or any other software or writing in the command line:
 
 ```bash
+export BUCKET=eng130-videos
+export aws_access_key_id=YOUR_KEY
+export aws_secret_key=YOUR_SECRET_KEY
+
 python app.py
 ```
