@@ -297,7 +297,7 @@ def storage():
     if 'loggedin' in session and session['loggedin']:
         with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
-                f"SELECT video_link FROM Videos WHERE user_id = 1")
+                f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
         li = list(df.to_dict()[0].values())
         name = []
         for n in li:
