@@ -13,7 +13,7 @@
 
     let camera_stream = null;
     let camera_stream2 = null;
-    let media_recorder = null;
+    let media_recorder = null;  
     let blobs_recorded = [];
     let video2 = null;
 
@@ -21,11 +21,14 @@
         camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         camera_stream2 = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = camera_stream2;
+        
     });
 
     start_button.addEventListener('click', function() {
         // set MIME type of recording as video/webm
         media_recorder = new MediaRecorder(camera_stream, { mimeType: 'video/webm' });
+        stop_button.disabled = false;
+        start_button.disabled = true;
 
         // event : new recorded video blob available 
         media_recorder.addEventListener('dataavailable', function(e) {
@@ -61,8 +64,9 @@
     
 
     stop_button.addEventListener('click', function() {
-        media_recorder.stop(); 
-        
+        media_recorder.stop();
+        stop_button.disabled = true;
+        start_button.disabled = false;
     });
     
 

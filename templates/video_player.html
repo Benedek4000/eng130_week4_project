@@ -1,19 +1,16 @@
 {% extends "base.html" %}
 
-{% block head %}  
-    <h1>Video Player</h1>
-{% endblock %}
-
 {% block body %}
     
+<h2>Your Videos</h2>
     <div class="container" style="text-align: center;"> 
-        <h2>Video Title: {{ name }}</h2>
-        {% for v in videos %} <video width="320" controls>
-            <source src="./static/uploads/{{ v }}" type="video/mp4">
-        </video>
-        <p>{{ v }}</p>
+        {% for v in videos %}
+        <div>
+            <iframe width="300" height="225" src="https://eng130-videos.s3.eu-west-1.amazonaws.com/sample.mp4" allowfullscreen> 
+            </iframe>
+            <p>NAME</p>
+        </div>
         {% endfor %}
-
         <!-- <p>~ Video goes here ~</p>
         <img src="../static/assets/VideoPlayer.png" alt="Placeholder" style="width: 300px; height: 250px;">
         <p style="text-align: bottom;"> Video Description</p> -->
