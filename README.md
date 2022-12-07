@@ -25,7 +25,7 @@ On your local machine you can add the following environment variables:
 export BUCKET=eng130-videos
 export aws_access_key_id=YOUR_KEY
 export aws_secret_access_key=YOUR_SECRET_KEY
-export MY_IP=localhost
+export MY_IP=Public_IPv4
 ```
 
 If you are using your aws instance, you can add the following in a file called `.env`:
