@@ -13,9 +13,6 @@ function validateLoginForm() {
 	var email = document.getElementById('email').value;
 	var password = document.getElementById('password').value;
 	
-	
-	
-
 	// Check if email and password is empty
 	if (email == '' || password == '') {
 		// Return Error Message if email and password is empty
