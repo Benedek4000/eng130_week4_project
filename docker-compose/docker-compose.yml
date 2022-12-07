@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=spartaglobal
 
   compose:
-    image: jorge2091/docker-app-s3
+    image: jorge2091/docker-test7
     container_name: compose
     restart: always
     ports:

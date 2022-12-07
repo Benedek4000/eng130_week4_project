@@ -25,14 +25,16 @@ On your local machine you can add the following environment variables:
 export BUCKET=eng130-videos
 export aws_access_key_id=YOUR_KEY
 export aws_secret_access_key=YOUR_SECRET_KEY
+export MY_IP=localhost
 ```
 
 If you are using your aws instance, you can add the following in a file called `.env`:
 
 ```bash
 BUCKET=eng130-videos
-AWS_ACCESS_KEY=YOUR_KEY
-AWS_SECRET_KEY=YOUR_SECRET_KEY
+AWS_ACCESS_KEY=<YOUR_KEY>
+AWS_SECRET_KEY=<YOUR_SECRET_KEY>
+MY_IP=<VM_IP>
 ```
 
 ### Running on localhost
@@ -193,7 +195,7 @@ Once we created our application and had it working on the localhost we wanted to
 
 ```dockerfile
 FROM python:slim
-LABEL MAINTERNER=jorge2091/t
+LABEL MAINTERNER=jorge2091/docker-test7
 WORKDIR /usr/src/app
 COPY . .
 RUN python -m pip install psycopg2-binary
