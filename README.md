@@ -30,7 +30,7 @@ export MY_IP=Public_IPv4
 
 If you are using your aws instance, you can add the following in a file called `.env`:
 
-```bash
+```
 BUCKET=eng130-videos
 AWS_ACCESS_KEY=<YOUR_KEY>
 AWS_SECRET_KEY=<YOUR_SECRET_KEY>
