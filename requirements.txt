@@ -1,0 +1,5 @@
+flask
+Flask-Mail
+pandas
+psycopg2
+boto3

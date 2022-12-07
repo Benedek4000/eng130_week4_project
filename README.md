@@ -177,26 +177,24 @@ CMD [ "python", "./app.py" ]
 
 **Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
 
-**Opencv** - This is a programming library that is aimed at real-time computer vision. Computer vision is a process by which we can understand the images and videos how they are stored and how we can manipulate and retrieve data from them. So we used it to build our camera function. We implemented it with out python flask and we able to build the recording functionality with it using the user's camera module. 
+fdf
+Osman
 
-```python
-camera = cv2.VideoCapture(0)
+Can i edit anything here?
 
-def record(out):
-    global rec_frame, detection
-    
-    while(rec):
-        time.sleep(0.045)
-        out.write(rec_frame)
-    if mute:
-        v = m.VideoFileClip("./in/temp.avi")
-        e = v.fx(m.vfx.speedx, 1)
-        now = datetime.datetime.now().strftime("%d%m%y-%H%M%S")
-        name = "./out/"+now+".mp4"
-        e.write_videofile(name, fps = 20)
-```
+hello from subhaan
 
-**Mongodb** - This is the database program we were originally going to use to store the video footage coming from the application usign GridFS but towards the end of the project we quickly realised that it is not compatible with our flask application so we had to scrap that utility and then use Javascript and S3 buckets to store the videos. 
+<<<<<<< HEAD
+Can i edit from my local machine?
 
+Hello
+=======
+Can i edit from my local machine?knjnk
 
-**POSTGRESQL** - This was our relational database system. We used it to hold all the information to do with our users such as the login details, sign-up details. So anything to do with the user. The information was stored here. 
+```bash
+export BUCKET=eng130-videos
+export aws_access_key_id=YOUR_KEY
+export aws_secret_access_key=YOUR_SECRET_KEY
+
+b
+>>>>>>> 4ef0d4b8777f2a6e26d9b7a47916c8cab0bfacf9
