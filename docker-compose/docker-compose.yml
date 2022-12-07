@@ -1,0 +1,26 @@
+services: 
+  db:
+    image: postgres:10.23-alpine
+    container_name: db
+    restart: always
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=spartaglobal
+
+  compose:
+    image: jorge2091/docker-app-s3
+    container_name: compose
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - db
+    environment:
+      - BUCKET=${BUCKET}
+      - POSTGRES=postgres://db:5432
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_KEY}
+    depends_on:
+      - db
