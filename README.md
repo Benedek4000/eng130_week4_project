@@ -3,11 +3,11 @@
 ![Homepage](/images/homepage.png)
 
 **Contributors:**
-|                         Frontend                         |                             Backend                              |                       Database                       |
-| :------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------: |
-|     [Abishek Aneese](https://github.com/AbisheK0726)     | [Abdelleh Chehat Bais Pedros](https://github.com/AbdellahChehat) |  [Abishek Jha](https://github.com/abhishek-jha-ce)   |
-| [Mohamed Abdikarim Yusuf](https://github.com/MoeShaa123) |         [Bendek Kovacs](https://github.com/Benedek4000)          |   [Angel Gelemerov](https://github.com/AGelemerov)   |
-|      [Subhaan Hussain](https://github.com/Subzy132)      |           [Jorge Reyes ](https://github.com/Jorge2091)           | [Aenugu Meghana](https://github.com/meghanasrividya) |
+|Frontend|Backend|Database|
+| :---------: | :---------: | :---------: |
+| [Abishek Aneese](https://github.com/AbisheK0726) | [Abdelleh Chehat Bais Pedros](https://github.com/AbdellahChehat) | [Abishek Jha](https://github.com/abhishek-jha-ce) |
+| [Mohamed Abdikarim Yusuf](https://github.com/MoeShaa123) | [Bendek Kovacs](https://github.com/Benedek4000) | [Angel Gelemerov](https://github.com/AGelemerov) |
+| [Subhaan Hussain](https://github.com/Subzy132) | [Jorge Reyes](https://github.com/Jorge2091) | [Aenugu Meghana](https://github.com/meghanasrividya) |
 
 ## Introduction
 
@@ -43,34 +43,34 @@ The list of requirements needed for this website is listed in requirements.txt, 
 
 1. Install all the requirements
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 2. Run the app.py file by running the following command in the terminal or a text editor
 
-```bash
-python app.py
-```
+   ```bash
+   python app.py
+   ```
 
-**NOTE: If python doesn't work try python3.**
+   **NOTE: If python doesn't work try python3.**
 
-```bash
-python3 app.py
-```
+   ```bash
+   python3 app.py
+   ```
 
 3. A successful run should give you the following output
 
-```bash
- * Serving Flask app 'app'
- * Debug mode: on
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 931-387-081
-```
+   ```bash
+    * Serving Flask app 'app'
+    * Debug mode: on
+   WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+    * Running on http://127.0.0.1:5000
+   Press CTRL+C to quit
+    * Restarting with stat
+    * Debugger is active!
+    * Debugger PIN: 931-387-081
+   ```
 
 ### Running App using Docker on local host or AWS instance
 
@@ -80,19 +80,19 @@ Press CTRL+C to quit
 
 3. Once install run `docker --version` in terminal to check if docker is installed
 
-```bash
-# Expected output
-Docker version 20.10.21, build baeda1f 
-```
+   ```bash
+   # Expected output
+   Docker version 20.10.21, build baeda1f 
+   ```
 
-3. With docker running, run the following command in terminal
+4. With docker running, run the following command in terminal
 
-```bash
-cd docker-compose
-docker-compose up --remove-orphans
-```
+   ```bash
+   cd docker-compose
+   docker-compose up --remove-orphans
+   ```
 
-4. If you go to `localhost` in the browser the website should be running
+5. If you go to `localhost` in the browser the website should be running
 
 ### Enable your camera on chrome
 
@@ -120,7 +120,7 @@ The Entiy Relationship Diagram (ERD) diagram for the database is shown below.
 |Check Login Functionality|Login with a valid username and valid password|The user can successfully login|[Test 4 Result](/images/tests/test4.png)|
 |Check Login Functionality|Login with an invalid username and invalid password|The user is prompted Incorrect Email/password|[Test 5 Result](/images/tests/test5.png)|
 |Check Camera Functionality|When the user clicks on the Start Camera button|The user could be able to start the camera|[Test 6 Result](/images/tests/test6.png)|
-|Check Camera Functionality|When the user clicks on the Start Recording button|The user could be able to start the recording and stop recording it should make a recording|[Test 7 Result](/images/tests/test7.png) <br> [Test 8 Result](/images/tests/test8.png)|
+|Check Camera Functionality|When the user clicks on the Start Recording button|The user could be able to start the recording and stop recording it should make a recording|[Test 7 Result](/images/tests/test7.png) [Test 8 Result](/images/tests/test8.png)|
 |Check Video Storage functionality|When the user clicks on the Storage tab|The user could be able to view the videos that he stored|[Test 9 Result](/images/tests/test9.png)|
 |Check the logout functionality|When the user clicks on the logout tab|The user is navigated back to login page|User successfully logged out|
 
@@ -170,7 +170,7 @@ Python flask allowed us to run our HTML files. These html files were also linked
 
 ### Javascript
 
-As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. So we used Javascript to validate the user entries before they are actually submitted. Such as: password length, email characters and number digits etc. 
+As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. So we used Javascript to validate the user entries before they are actually submitted. Such as: password length, email characters and number digits etc.
 
 ```javascript
 function validateLoginForm() {
