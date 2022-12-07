@@ -9,7 +9,7 @@
             <iframe width="300" height="225" src="{{ v }}" allowfullscreen> 
             </iframe>
             <form method="POST">
-                <Label>{{ n }}</Label><button class="btn btn-primary" name="Delete" value="Delete" id="Delete">Delete</button>
+                <Label class="pud">{{ n }}</Label><button class="btn btn-primary" type="hidden"  name="Delete" value="{{ n }}" id="3">Delete</button>
             </form>
         </div>
         {% endfor %}

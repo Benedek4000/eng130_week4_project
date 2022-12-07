@@ -264,10 +264,6 @@ def reset(r):
             with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
                 db.execute_query(f"UPDATE Users SET password_reset = 'FALSE' WHERE email = '{email}';")
             return render_template('passwordReset.html')
-
-
-    
-    
     return render_template('passwordReset.html')
 
 
@@ -300,18 +296,15 @@ def storage():
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
         if request.method == "POST":
-            object = request.form.get('delete')
-            print(request.form)
-            print('----------------------------------------')
-            print(object)
+            object = request.form.get('Delete')
             s3.delete_file(bucket_name, object)
             with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
-            df = db.execute_query(
-                f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+                df = db.execute_query(
+                    f"DELETE FROM Videos WHERE video_title = '{object}';")
 
         with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
-                f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+                f"SELECT video_link FROM Videos WHERE user_id = {session['id']};")
         print(len(df.index))
         if len(df.index) == 0:
             no_links = "You yet to make a video"
@@ -347,6 +340,7 @@ def upload():
         # process the file object here! 
         return jsonify(success=True)
     return jsonify(success=False)
+
 def s3_upload(filename, id):
     s3.upload(f'./static/uploads/{filename}', bucket_name,object_name=filename)
     os.remove(f"./static/uploads/{filename}")
@@ -358,7 +352,34 @@ def s3_upload(filename, id):
         except:
             raise Exception()
 
+@app.route('/storage2', methods=["POST", "GET"])
+def storage2():
+    global postgres_ip, postgres_port, bucket_name
     
+    # Check if user is loggedin
+    if True:
+        if request.method == "POST":
+            object = request.form.get('Delete')
+            s3.delete_file(bucket_name, object)
+            with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+                df = db.execute_query(
+                    f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+
+        # with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+        #     df = db.execute_query(
+        #         f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+        # print(len(df.index))
+        # if len(df.index) == 0:
+        #     no_links = "You yet to make a video"
+        #     return render_template('video_player.html', no_links = no_links)
+        # li = list(df.to_dict()[0].values())
+        # name = []
+        # for n in li:
+        #     name.append([ n, os.path.split(n)[1]])
+        return render_template('video_player.html', name = [("https://eng130-videos.s3.eu-west-1.amazonaws.com/1I071222I161609.mp4", "1I071222I161609.mp4")])
+    else:
+        flash("You need to be logged in to use this website", category="error")
+        return redirect(url_for("login"))
 
 
 def hash_pw(password, salt="5gz"):
