@@ -8,9 +8,17 @@
         <div>
             <iframe width="300" height="225" src="{{ v }}" allowfullscreen> 
             </iframe>
-            <p>{{ n }}</p>
+            <form method="POST">
+                <Label>{{ n }}</Label><button class="btn btn-primary" name="Delete" value="Delete" id="Delete">Delete</button>
+            </form>
         </div>
         {% endfor %}
+        {% if no_links %}
+            <div>
+                <h1>{{ no_links }}</h1>
+            </div>
+
+        {% endif %}
         <!-- <p>~ Video goes here ~</p>
         <img src="../static/assets/VideoPlayer.png" alt="Placeholder" style="width: 300px; height: 250px;">
         <p style="text-align: bottom;"> Video Description</p> -->

@@ -13,6 +13,7 @@ import datetime, time
 from werkzeug.utils import secure_filename
 import pandas as pd
 from threading import Thread as th
+import numpy as np
 
 
 app = Flask(__name__)
@@ -23,8 +24,8 @@ Migrate main.py to app.py
 """
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'mosman196@gmail.com'
-app.config['MAIL_PASSWORD'] = 'csmleswbunbxjqhz'
+app.config['MAIL_USERNAME'] = 'eng130Test@gmail.com'
+app.config['MAIL_PASSWORD'] = 'qlwaahukhbfeejjp'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['UPLOAD_FOLDER'] = './static/uploads/'
@@ -209,8 +210,11 @@ def forgotpassword():
         elif len(df.index) > 0:
             x=np.random.randint(99, size=(29))
             y=''.join(map(str, x))
-            msg = Message('Password reset', sender='mosman196@gmail.com', recipients=[email])
-            msg.body = f"Please click on the link to reset your password: http://127.0.0.1:80/reset/{y}"
+            msg = Message('Password reset', sender='eng130Test@gmail.com', recipients=[email])
+            if os.environ.get('MY_IP'):
+                msg.body = f"Please click on the link to reset your password: http://{os.environ.get('MY_IP')}/reset/{y}"
+            else:
+                msg.body = f"Automated Server IP identification was refused, please use this link as a base format for the url to reset your password: http://host_ip/reset/{y}"
             mail.send(msg)
             
             with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
@@ -289,22 +293,36 @@ def videorec():
         return redirect(url_for("login"))
 
 
-@app.route('/storage')
+@app.route('/storage', methods=["POST", "GET"])
 def storage():
-    global postgres_ip, postgres_port
+    global postgres_ip, postgres_port, bucket_name
     
     # Check if user is loggedin
     if 'loggedin' in session and session['loggedin']:
+        if request.method == "POST":
+            object = request.form.get('delete')
+            print(request.form)
+            print('----------------------------------------')
+            print(object)
+            s3.delete_file(bucket_name, object)
+            with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
+            df = db.execute_query(
+                f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+
         with postgresql(host=postgres_ip, db_name=psql_prop['db_name'], user=psql_prop['user'], password=psql_prop['password'], port=postgres_port) as db:
             df = db.execute_query(
                 f"SELECT video_link FROM Videos WHERE user_id = {session['id']}")
+        print(len(df.index))
+        if len(df.index) == 0:
+            no_links = "You yet to make a video"
+            return render_template('video_player.html', no_links = no_links)
         li = list(df.to_dict()[0].values())
         name = []
         for n in li:
             name.append([ n, os.path.split(n)[1]])
         return render_template('video_player.html', name = name)
     else:
-        flash("You need to be logged in to use this website", category="error", name = session['last_name'])
+        flash("You need to be logged in to use this website", category="error")
         return redirect(url_for("login"))
 
 @app.route('/test', methods=["POST", "GET"])
