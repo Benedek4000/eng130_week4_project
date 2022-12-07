@@ -74,16 +74,15 @@ docker run -d -p 5000:5000 abishek726/test-python-app-111
 
 | Test scenario | Test Case | Expected Result | Actual Result |
 |:----------- | :----------: | :-------: | ---------: |
-|Check Sign Up Functionality| When the user clicks on Register here and enters the submit button without filling in all fields | The user is prompted to enter all fields ||
-|Check Sign Up Functionality|When the user clicks on Register here and enters the submit button after filling in all fields with the correct information|The user can successfully register||
-|Check Sign Up Functionality|When the user clicks on Register here and enters the details that were already registered|The user is prompted the account already exists||
-|Check Login Functionality|Login with a valid username and valid password|The user can successfully login||
-|Check Login Functionality|Login with an invalid username and valid password|The user is prompted Incorrect Email/password||
-|Check Login Functionality|Login with an invalid username and invalid password|The user is prompted Incorrect Email/password||
-|Check Camera Functionality|When the user clicks on the Start Camera button|The user could be able to start the camera||
-|Check Camera Functionality|When the user clicks on the Start Recording button|The user could be able to start the recording and stop recording it should make a recording||
-|Check Video Storage functionality|When the user clicks on the Storage tab|The user could be able to view the videos that he stored||
-|Check the logout functionality|When the user clicks on the logout tab|The user is navigated back to login page||
+|Check Sign Up Functionality| When the user clicks on Register here and enters the submit button without filling in all fields | The user is prompted to enter all fields |[Test 1](/images/test1.png)|
+|Check Sign Up Functionality|When the user clicks on Register here and enters the submit button after filling in all fields with the correct information|The user can successfully register|[Test 2](/images/test2.png)|
+|Check Sign Up Functionality|When the user clicks on Register here and enters the details that were already registered|The user is prompted the account already exists|[Test 3](/images/test3.png)|
+|Check Login Functionality|Login with a valid username and valid password|The user can successfully login|[Test 4](/images/test4.png)|
+|Check Login Functionality|Login with an invalid username and invalid password|The user is prompted Incorrect Email/password|[Test 5](/images/test5.png)|
+|Check Camera Functionality|When the user clicks on the Start Camera button|The user could be able to start the camera|[Test 6](/images/test6.png)|
+|Check Camera Functionality|When the user clicks on the Start Recording button|The user could be able to start the recording and stop recording it should make a recording|[Test 7](/images/test7.png) <br> [Test 8](/images/test8.png)|
+|Check Video Storage functionality|When the user clicks on the Storage tab|The user could be able to view the videos that he stored|[Test 9](/images/test9.png)|
+|Check the logout functionality|When the user clicks on the logout tab|The user is navigated back to login page|User successfully logged out|
 
 ## Toolset
 
@@ -177,24 +176,9 @@ CMD [ "python", "./app.py" ]
 
 **Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
 
-fdf
-Osman
-
-Can i edit anything here?
-
-hello from subhaan
-
-<<<<<<< HEAD
-Can i edit from my local machine?
-
-Hello
-=======
-Can i edit from my local machine?knjnk
-
 ```bash
 export BUCKET=eng130-videos
 export aws_access_key_id=YOUR_KEY
 export aws_secret_access_key=YOUR_SECRET_KEY
 
-b
->>>>>>> 4ef0d4b8777f2a6e26d9b7a47916c8cab0bfacf9
+
