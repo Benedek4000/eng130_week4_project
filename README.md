@@ -61,10 +61,36 @@ Docker version 20.10.21, build baeda1f
 3. Now that you have Docker installed Run the image the app is on
 
 ```bash
-docker run -d -p 5000:5000 abishek726/test-python-app-111
+docker run -d -p 80:80 jorge2091/docker-app-s3
 ```
 
-4. If you go to `localhost:5000` in the browser the website should be running
+4. If you go to `localhost` in the browser the website should be running
+
+### Setting environment variables
+
+On your local machine you can add the following environment variables:
+
+```bash
+export BUCKET=eng130-videos
+export aws_access_key_id=YOUR_KEY
+export aws_secret_access_key=YOUR_SECRET_KEY
+```
+
+On your server you can add the following in a file called `.env`:
+
+```bash
+BUCKET=eng130-videos
+AWS_ACCESS_KEY=YOUR_KEY
+AWS_SECRET_KEY=YOUR_SECRET_KEY
+```
+
+### Enbale your camera on chrome
+
+Chrome has a feature that blocks access to your camera by default.
+
+To enable it, go to `chrome://flags/#unsafely-treat-insecure-origin-as-secure` and add `http://<your-VM-ip>`.
+
+Then restart chrome.
 
 ## ERD Diagram
 
@@ -166,7 +192,6 @@ RUN pip install ipapi
 RUN pip install "opencv-python-headless<4.3"
 RUN pip install psycopg2
 
-
 COPY . .
 
 EXPOSE 5000
@@ -174,11 +199,5 @@ EXPOSE 5000
 CMD [ "python", "./app.py" ]
 ```
 
-**Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application. 
-
-```bash
-export BUCKET=eng130-videos
-export aws_access_key_id=YOUR_KEY
-export aws_secret_access_key=YOUR_SECRET_KEY
-
+**Github** - Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application.
 
