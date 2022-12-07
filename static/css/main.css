@@ -26,3 +26,6 @@
   display: flex;
   flex-direction: column;
 }
+.pud {
+  padding: 50px;
+}

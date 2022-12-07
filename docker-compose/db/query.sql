@@ -10,6 +10,7 @@ CREATE TABLE Users(
 	last_name VARCHAR(20) NOT NULL,
 	phone_number VARCHAR(11) NOT NULL,
 	is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+	password_reset VARCHAR(60) NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (user_id)
 );
 

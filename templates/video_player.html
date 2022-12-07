@@ -8,7 +8,9 @@
         <div>
             <iframe width="300" height="225" src="{{ v }}" allowfullscreen> 
             </iframe>
-            <p>{{ n }}</p>
+            <form method="POST">
+                <Label class="pud">{{ n }}</Label><button class="btn btn-primary" type="hidden"  name="Delete" value="{{ n }}" id="3">Delete</button>
+            </form>
         </div>
         {% endfor %}
         <!-- <p>~ Video goes here ~</p>
