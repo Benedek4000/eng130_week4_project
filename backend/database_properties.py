@@ -2,10 +2,10 @@
 
 postgresql_properties_local={
     'host': '127.0.0.1',
-    'port': '22',
-    'user': 'postgres',
+    'port': '5432',
+    'user': 'root',
     'password': 'spartaglobal',
-    'db_name': 'users'
+    'db_name': 'root'
 }
 
 postgresql_properties_global={

@@ -1,0 +1,125 @@
+<html>
+<head>
+    <title>Webcam Upload</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        * {
+            font-family: sans-serif;
+            user-select: none;
+        }
+        canvas {
+            border: 1px solid black;
+            float: left;
+        }
+        body, #two-up {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            margin: 1em;
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function cameraReady(videoElement) {
+            console.log('cameraReady: checking...');
+            if (videoElement) {
+                if (videoElement.srcObject) {
+                    let tracks = videoElement.srcObject.getVideoTracks();
+                    if (tracks.length > 0) {
+                        if (tracks[0].readyState == 'live') {
+                            let w = videoElement.videoWidth, h = videoElement.videoHeight;
+                            if (w > 0 || h > 0) {
+                                console.log('cameraReady: live! ' + w + 'x' + h);
+                                return true;
+                            }
+                            console.error('cameraReady: live, but 0x0');
+                            return false;
+                        }
+                        console.error('cameraReady: readyState is ' + tracks[0].readyState);
+                        return false;
+                    }
+                    console.error('cameraReady: no tracks');
+                    return false;
+                }
+                console.error('cameraReady: no srcObject');
+                return false;
+            }
+            console.error('cameraReady: no element');
+            return false;
+        }
+        
+        function initCamera(videoElement) {
+            // these are essential on iOS
+            videoElement.setAttributeNode(document.createAttribute('autoplay'));
+            videoElement.setAttributeNode(document.createAttribute('playsinline'));
+            
+            // don't re-initialize the camera if it's already live
+            if (cameraReady(videoElement)) {
+                console.log('initCamera: done!');
+                return Promise.resolve();
+            }
+            
+            return navigator.mediaDevices
+            .getUserMedia({
+                audio: false,
+                video: { facingMode: 'user' }
+            })
+            // stream is ready, set to the video element
+            // don't return until the metadata is ready
+            // https://stackoverflow.com/a/41866914/940196
+            .then(stream => new Promise(resolve => {
+                console.log('initCamera: setting srcObject...');
+                videoElement.onloadedmetadata = resolve;
+                videoElement.srcObject = stream;
+            }))
+            .then(() => console.log('initCamera: done!'))
+            .catch(err => {
+                console.error(err);
+                alert(config.cameraErrorMessage);
+            })
+        }
+        
+        window.onload = (event) => {
+            let videoElt = document.getElementById('camera');
+            initCamera(videoElt);
+        };
+        
+        function videoToBlob(src, cb) {
+            let width = src.videoWidth || src.width;
+            let height = src.videoHeight || src.height;
+            let canvas = new OffscreenCanvas(width, height);
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(src, 0, 0, width, height);
+            canvas.convertToBlob({
+                type: 'image/jpeg',
+                quality: 0.80
+            }).then(blob => {
+                cb(blob);
+            });
+        }
+        
+        function upload() {
+            let src = document.getElementById('camera');
+            videoToBlob(src, blob => {
+                let url = 'http://localhost:5000/webcamserver/upload/';
+                fetch(url, {
+                    method: 'post',
+                    body: blob
+                }).then(response => response.json())
+                .then(data => console.log(data))
+            });
+        }
+    </script>
+    <div>
+        <video id="camera" onclick="upload()" style="cursor:pointer"></video>
+    </div>
+    
+</body>
+</html>

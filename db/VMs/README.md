@@ -1,4 +1,3 @@
-# Setup Guide for PostgreSQL
 
 - run virtual machine
 - type the following commands:
