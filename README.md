@@ -39,7 +39,8 @@ MY_IP=<VM_IP>
 
 ### Running on localhost
 
-The list of requirements needed for this website is listed in requirements.txt, all you need to do is clone this repository into your local machine. Once you have cloned the repository, you can run following commands
+The list of requirements needed for this website is listed in requirements.txt, all you need to do is clone this repository into your local machine.
+Once you have cloned the repository, you can run following commands
 
 1. Install all the requirements
 
@@ -96,7 +97,8 @@ The list of requirements needed for this website is listed in requirements.txt, 
 
 ### Enable your camera on chrome
 
-Chrome has a feature that blocks access to your camera by default. This should only affect you if you are running the app on your virtual machine with HTTP.
+Chrome has a feature that blocks access to your camera by default.
+This should only affect you if you are running the app on your virtual machine with HTTP.
 
 To enable it, go to `chrome://flags/#unsafely-treat-insecure-origin-as-secure` and add `http://<your-VM-ip>`.
 
@@ -104,7 +106,8 @@ Then restart chrome.
 
 ## ERD Diagram
 
-Our appliction has database that stores the user information and the videos links that the user records. The database is designed using Postgres.
+Our appliction has database that stores the user information and the videos links that the user records.
+The database is designed using Postgres.
 
 The Entiy Relationship Diagram (ERD) diagram for the database is shown below.
 
@@ -128,13 +131,21 @@ The Entiy Relationship Diagram (ERD) diagram for the database is shown below.
 
 ### Draw.io
 
-A visual diagram creation service that allowed us to draw the mockups and wireframes needed to plan how our application will look. We able draw the different aspects of the app and then annotate it where needed.
+A visual diagram creation service that allowed us to draw the mockups and wireframes needed to plan how our application will look.
+We able draw the different aspects of the app and then annotate it where needed.
 
 ![Video Player Wireframe](/images/wireframes/VideoPlayer.png)
 
+### Github
+
+Our version control service. All of the contributors used this to update and test the code we made.
+We had multiple branches such as the main, test, backend and frontend and database.
+Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application.
+
 ### Python
 
-The fundamental programming language we used to write our funtionalities. We use a python framework called Flask to structure our application and create the backend.
+The fundamental programming language we used to write our funtionalities.
+We use a python framework called Flask to structure our application and create the backend.
 
 We Imported many API's and Libraries provided by python to carry out different functions, such as.
 
@@ -148,11 +159,16 @@ import datetime, time
 
 ### Flask
 
-A web framework provided by python to allow us to structure our app. It allowed us to easily develop our application using a python file. As long as we had the required dependencies we were able to just run one command and then the app would start.
+A web framework provided by python to allow us to structure our app.
+It allowed us to easily develop our application using a python file.
+As long as we had the required dependencies we were able to just run one command and then the app would start.
 
 ### HTML/CSS
 
-Python flask allowed us to run our HTML files. These html files were also linked to bootstrap which implemented CSS into our website. What this essentially means is that it makes our website look nice. HTML is the skeleton, CSS is the design(skin) and the javascript carries out the functionality.
+Python flask allowed us to run our HTML files.
+These html files were also linked to bootstrap which implemented CSS into our website.
+What this essentially means is that it makes our website look nice.
+HTML is the skeleton, CSS is the design(skin) and the javascript carries out the functionality.
 
 ```html
 <!DOCTYPE html>
@@ -170,7 +186,10 @@ Python flask allowed us to run our HTML files. These html files were also linked
 
 ### Javascript
 
-As mentioned before Javascript carries out some of the functionalities on the HTML templates. We mainly used it on our `login` and `signup` pages as validation. So we used Javascript to validate the user entries before they are actually submitted. Such as: password length, email characters and number digits etc.
+As mentioned before Javascript carries out some of the functionalities on the HTML templates.
+We mainly used it on our `login` and `signup` pages as validation.
+So we used Javascript to validate the user entries before they are actually submitted.
+Such as: password length, email characters and number digits etc.
 
 ```javascript
 function validateLoginForm() {
@@ -189,9 +208,15 @@ function validateLoginForm() {
 }
 ```
 
+### AWS and S3
+
+We used AWS EC2 to host our application to make it accessible to the public. We also used S3 to store the video the user records.
+
 ### Docker
 
-Once we created our application and had it working on the localhost we wanted to containerise the application and the database. and the easiest way to do this was to use Docker which is a platform to deliver software in packages. All we had to do was create Docker files and then upload the image onto dockerhub.
+Once we created our application and had it working on the localhost we wanted to containerise the application and the database.
+and the easiest way to do this was to use Docker which is a platform to deliver software in packages.
+All we had to do was create Docker files and then upload the image onto dockerhub.
 
 ```dockerfile
 FROM python:slim
@@ -206,7 +231,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 CMD [ "python", "app.py" ]
 ```
-
-### Github
-
-Our version control service. All of the contributors used this to update and test the code we made. we had multiple branches such as the main, test, backend and frontend and database. Each group tested their code on their branch and then we slowly integrated all the branches into main to create the application.
